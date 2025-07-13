@@ -1,0 +1,3566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OFD KPI Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Chart.js only (no react-chartjs-2) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <!-- xlsx.js for Excel file parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: 'Euclid Circular B';
+        src: url('font/Euclid Circular B Light.ttf') format('truetype');
+        font-weight: 300;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Euclid Circular B';
+        src: url('font/Euclid Circular B Regular.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Euclid Circular B';
+        src: url('font/Euclid Circular B Medium.ttf') format('truetype');
+        font-weight: 500;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Euclid Circular B';
+        src: url('font/Euclid Circular B SemiBold.ttf') format('truetype');
+        font-weight: 600;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Euclid Circular B';
+        src: url('font/Euclid Circular B Bold.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      body, html, .primary-text, .secondary-text, .card, .table-header, .table-row, .btn-primary, .btn-secondary, .font-bold, .font-semibold, .font-medium, .font-light {
+        font-family: 'Euclid Circular B', Arial, sans-serif !important;
+      }
+      :root {
+        --primaryMain: #1f6a4a;
+        --primaryHover: #2e9e6e;
+        --primarySurface: #184c36;
+        --primaryBorder: #295c47;
+        --primaryFocus: #184c36;
+        --secondaryMain: #ff9d18;
+        --secondaryHover: #e58400;
+        --secondarySurface: #2a3c33;
+        --secondaryFocus: #3a2a1a;
+        --neutral: #103525;
+        --white: #fff;
+        --text: #f2f6f4;
+        --textSecondary: #ffd8a3;
+        --border: #295c47;
+      }
+      html, body {
+        font-family: 'Euclid Circular B', Arial, sans-serif;
+        background: var(--neutral);
+        color: var(--text);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      #root {
+        width: 100vw;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+      .app-grid {
+        width: 100vw;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        min-height: 100vh;
+        background: var(--neutral);
+      }
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: var(--neutral);
+        width: 100%;
+        transition: background 0.3s;
+        max-width: 100vw;
+        margin: 0 auto;
+      }
+      .dashboard-section {
+        padding: 2rem;
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        max-width: 100vw;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .sidebar {
+        background: linear-gradient(180deg, var(--primaryMain) 0%, var(--primarySurface) 100%);
+        box-shadow: 2px 0 16px 0 rgba(31,106,74,0.10);
+        display: flex;
+        flex-direction: column;
+        padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+        min-height: 100vh;
+        min-width: 340px;
+        max-width: 360px;
+        transition: background 0.3s, width 0.3s;
+        border-right: 2px solid var(--border);
+      }
+      .sidebar.collapsed {
+        width: 64px;
+        min-width: 64px;
+        padding: 1.5rem 0.5rem 1rem 0.5rem;
+      }
+      .sidebar .logo {
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+        color: var(--secondaryMain);
+      }
+      .sidebar nav {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .sidebar nav button, .sidebar nav a {
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        text-align: left;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        outline: none;
+      }
+      .sidebar nav button.active, .sidebar nav a.active, .sidebar nav button:hover, .sidebar nav a:hover {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+      }
+      .sidebar .sidebar-toggle {
+        margin-top: 2rem;
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background 0.2s;
+      }
+      .sidebar .sidebar-toggle:hover {
+        background: var(--secondaryHover);
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        background: var(--primarySurface);
+        color: var(--white);
+        box-shadow: 0 2px 12px 0 rgba(31,106,74,0.08);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .navbar .theme-toggle {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border: 2px solid var(--secondaryMain);
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s, color 0.2s;
+      }
+      .navbar .theme-toggle:hover {
+        background: var(--secondaryHover);
+        color: var(--white);
+      }
+      .dashboard-section {
+        padding: 2rem;
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        max-width: 100vw;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .card {
+        background: var(--primarySurface);
+        border-radius: 1rem;
+        box-shadow: 0 2px 12px 0 rgba(31,106,74,0.08);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: box-shadow 0.3s;
+        color: var(--text);
+        border: 1.5px solid var(--secondaryMain);
+      }
+      .card:hover {
+        box-shadow: 0 4px 24px 0 rgba(255,157,24,0.18);
+      }
+      .dashboard-grid {
+        display: flex;
+        gap: 1.5rem;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .dashboard-grid > div {
+        flex: 1 1 48%;
+        min-width: 320px;
+        max-width: none;
+      }
+      @media (max-width: 1023px) {
+        .app-grid { flex-direction: column; }
+        .sidebar { width: 100%; min-width: 0; max-width: 100%; flex-direction: row; }
+        .main-content { width: 100%; }
+        .dashboard-grid { flex-direction: column; }
+        .dashboard-grid > div { max-width: 100%; min-width: 0; }
+      }
+      @media (max-width: 639px) {
+        .dashboard-section { padding: 0.5rem; }
+        .navbar { padding: 0.5rem 1rem; }
+        .card { padding: 0.75rem; }
+        .dashboard-grid { gap: 0.75rem; }
+      }
+      .sticky-header {
+        position: sticky;
+        top: 0;
+        background: var(--primarySurface);
+        z-index: 2;
+      }
+      .table-container {
+        overflow-x: auto;
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.98rem;
+        background: var(--primarySurface);
+        color: var(--text);
+      }
+      th, td {
+        padding: 0.75rem 0.5rem;
+        text-align: left;
+        border-bottom: 1px solid var(--secondaryMain);
+      }
+      th {
+        background: var(--primarySurface);
+        color: var(--secondaryMain);
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      tr:nth-child(even) { background: var(--primaryFocus); }
+      tr:nth-child(odd) { background: var(--primarySurface); }
+      tr[tabindex='0']:focus, tr:hover { background: var(--secondaryMain); color: var(--neutral); }
+      .pagination {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-top: 1rem;
+        justify-content: flex-end;
+      }
+      .pagination button {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border: none;
+        border-radius: 0.4rem;
+        padding: 0.4rem 0.8rem;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s, color 0.2s;
+      }
+      .pagination button:disabled {
+        background: var(--primarySurface);
+        color: var(--textSecondary);
+        cursor: not-allowed;
+      }
+      .export-btn {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border: 1.5px solid var(--secondaryMain);
+        border-radius: 0.4rem;
+        padding: 0.4rem 1rem;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-left: 1rem;
+        transition: background 0.2s, color 0.2s;
+      }
+      .export-btn:hover { background: var(--secondaryHover); color: var(--white); }
+      .spinner {
+        border: 4px solid var(--primarySurface);
+        border-top: 4px solid var(--secondaryMain);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+      }
+      .gradient-header {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        padding: 1.5rem 2rem;
+        border-radius: 1rem 1rem 0 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 12px 0 rgba(255,157,24,0.08);
+      }
+      .kpi-cards {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+      .kpi-card {
+        flex: 1 1 180px;
+        background: var(--primarySurface);
+        color: var(--secondaryMain);
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 12px 0 rgba(31,106,74,0.10);
+        border: 2px solid var(--secondaryMain);
+        padding: 1.2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 180px;
+        transition: box-shadow 0.2s, background 0.2s, border 0.2s;
+      }
+      .kpi-card:hover {
+        box-shadow: 0 4px 24px 0 rgba(255,157,24,0.18);
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border-color: var(--secondaryHover);
+      }
+      .kpi-label {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+      .kpi-value {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.25rem;
+        color: var(--white);
+      }
+      .kpi-desc {
+        font-size: 0.95rem;
+        color: var(--text);
+      }
+      .date-picker {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .date-picker input[type='date'] {
+        border: 1px solid var(--secondaryMain);
+        border-radius: 0.4rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 1rem;
+        background: var(--primarySurface);
+        color: var(--text);
+        transition: border 0.2s;
+      }
+      .date-picker input[type='date']:focus {
+        border: 1.5px solid var(--secondaryMain);
+        outline: none;
+      }
+      .vehicle-mapping {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .vehicle-mapping select, .vehicle-mapping input {
+        border: 1px solid var(--secondaryMain);
+        border-radius: 0.4rem;
+        padding: 0.4rem 0.7rem;
+        font-size: 1rem;
+        background: var(--primarySurface);
+        color: var(--text);
+        transition: border 0.2s;
+      }
+      .vehicle-mapping select:focus, .vehicle-mapping input:focus {
+        border: 1.5px solid var(--secondaryMain);
+        outline: none;
+      }
+      .theme-light { background: var(--neutral); color: var(--text); }
+      .theme-dark { background: var(--neutral); color: var(--text); }
+      .visually-hidden { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+      /* Modern Filters Section Styles */
+      .filters-modern {
+        background: var(--primaryFocus);
+        border: 1.5px solid var(--secondaryMain);
+        border-radius: 1.2rem;
+        box-shadow: 0 2px 12px 0 rgba(255,157,24,0.10);
+      }
+      .filters-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2.2rem;
+      }
+      .filters-row {
+        width: 100%;
+        display: flex;
+        gap: 1.2rem;
+        margin-bottom: 0.2rem;
+        min-width: 0;
+      }
+      .filters-row > div {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      .filters-input[type='date'], .filters-row input[type='date'] {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+      .filters-label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.45rem;
+        color: var(--textSecondary);
+        font-size: 1.08rem;
+        letter-spacing: 0.01em;
+      }
+      .filters-input {
+        width: 100%;
+        padding: 0.65rem 1rem;
+        border-radius: 0.7rem;
+        border: 2px solid var(--secondaryMain);
+        background: var(--neutral);
+        color: var(--text);
+        font-size: 1.08rem;
+        outline: none;
+        transition: border 0.2s, box-shadow 0.2s;
+        margin-bottom: 0.1rem;
+      }
+      .filters-input:focus {
+        border-color: var(--secondaryHover);
+        box-shadow: 0 0 0 2px rgba(229,132,0,0.2);
+      }
+      /* Custom file input */
+      .filters-input-file {
+        display: none;
+      }
+      .filters-file-label {
+        display: inline-block;
+        width: 100%;
+        padding: 0.65rem 1rem;
+        border-radius: 0.7rem;
+        border: 2px solid var(--secondaryMain);
+        background: var(--neutral);
+        color: var(--textSecondary);
+        font-size: 1.08rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: left;
+        transition: border 0.2s, background 0.2s, color 0.2s;
+        margin-bottom: 0.1rem;
+      }
+      .filters-file-label:hover, .filters-file-label:focus {
+        background: var(--primarySurface);
+        color: var(--white);
+        border-color: var(--secondaryHover);
+      }
+      .filters-file-name {
+        display: block;
+        color: var(--textSecondary);
+        font-size: 0.98rem;
+        margin-top: 0.2rem;
+        margin-bottom: 0.1rem;
+        word-break: break-all;
+      }
+      .filters-form .filters-row:last-child {
+        justify-content: flex-end;
+        gap: 1.2rem;
+        margin-top: 0.5rem;
+      }
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 180px;
+        margin: 0;
+        font-size: 1.13rem;
+        font-weight: 700;
+        border-radius: 0.7rem;
+      }
+      .btn-primary {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border: none;
+        padding: 0.7rem 1.3rem;
+        box-shadow: 0 1px 4px 0 rgba(255,157,24,0.10);
+        transition: background 0.2s, color 0.2s;
+      }
+      .btn-primary:hover, .btn-primary:focus {
+        background: var(--secondaryHover);
+        color: var(--white);
+      }
+      .btn-secondary {
+        background: var(--primarySurface);
+        color: var(--textSecondary);
+        border: 2px solid var(--secondaryMain);
+        padding: 0.7rem 1.3rem;
+        transition: background 0.2s, color 0.2s, border 0.2s;
+      }
+      .btn-secondary:hover, .btn-secondary:focus {
+        background: var(--secondaryMain);
+        color: var(--neutral);
+        border-color: var(--secondaryHover);
+      }
+      @media (min-width: 400px) {
+        .filters-form .filters-row:last-child {
+          flex-direction: row;
+        }
+        .btn-primary, .btn-secondary {
+          width: auto;
+        }
+      }
+      .sidebar-filters-header {
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-bottom: 2.2rem;
+        letter-spacing: 1px;
+        color: var(--secondaryMain);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col items-center py-8">
+    <div id="root"></div>
+    <script type="text/babel">
+      // Utility: Cap utilization at 100% and flag errors
+      function capUtil(val) {
+        if (typeof val !== 'number') return 0;
+        if (val > 100) return 100;
+        if (val < 0) return 0;
+        return val;
+      }
+
+      // Dynamic title generation function
+      function generateDynamicTitle(filteredData, dateRange, vehicleType) {
+        if (!filteredData || filteredData.length === 0) {
+          return "No Data Available";
+        }
+        
+        // Get unique sites
+        const sites = [...new Set(filteredData.map(item => item["PLANNING SITE NAME (DC NAME)"]))];
+        const siteName = sites.length === 1 ? sites[0] : sites.length > 1 ? "Multiple Sites" : "Unknown Site";
+        
+        // Get shipment type based on vehicle type filter
+        let shipmentType = "All Shipments";
+        if (vehicleType === "DEDICATED") {
+          shipmentType = "SELF Shipments";
+        } else if (vehicleType === "MARKET") {
+          shipmentType = "PPS Shipments";
+        }
+        
+        // Format date range
+        let dateRangeText = "";
+        if (dateRange.start && dateRange.end) {
+          const startDate = new Date(dateRange.start);
+          const endDate = new Date(dateRange.end);
+          const startFormatted = startDate.toISOString().split('T')[0];
+          const endFormatted = endDate.toISOString().split('T')[0];
+          dateRangeText = `${startFormatted} to ${endFormatted}`;
+        } else if (dateRange.start) {
+          const startDate = new Date(dateRange.start);
+          dateRangeText = `from ${startDate.toISOString().split('T')[0]}`;
+        } else if (dateRange.end) {
+          const endDate = new Date(dateRange.end);
+          dateRangeText = `until ${endDate.toISOString().split('T')[0]}`;
+        } else {
+          dateRangeText = "All Dates";
+        }
+        
+        return `${siteName} | ${shipmentType} | ${dateRangeText}`;
+      }
+
+      // Utility and chart code block
+      const SAMPLE_DATA = [
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45846.63263888889,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "MOE123",
+          "Total Consignment": 4,
+          "Total Delivery Consignment": 4,
+          "Vehicle Volume Utilisation (%)": 0.0133,
+          "Vehicle Weight Utilisation (%)": 0.0333,
+          "Total weight (Kg)": 200,
+          "Total volume (Cubic Feet)": 14.12588
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45844.666666666664,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-159",
+          "Total Consignment": 42,
+          "Total Delivery Consignment": 39,
+          "Vehicle Volume Utilisation (%)": 12939.4338,
+          "Vehicle Weight Utilisation (%)": 0.0093,
+          "Total weight (Kg)": 55.61,
+          "Total volume (Cubic Feet)": 13708566.7073524
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45846.45763888889,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-SL-20",
+          "Total Consignment": 1,
+          "Total Delivery Consignment": 0,
+          "Vehicle Volume Utilisation (%)": 0,
+          "Vehicle Weight Utilisation (%)": 0.0083,
+          "Total weight (Kg)": 50,
+          "Total volume (Cubic Feet)": 0
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45846.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-001",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 8,
+          "Vehicle Volume Utilisation (%)": 80,
+          "Vehicle Weight Utilisation (%)": 50,
+          "Total weight (Kg)": 100,
+          "Total volume (Cubic Feet)": 20
+        },
+        // Additional sample data
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45847.5,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-160",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 28,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 60,
+          "Total weight (Kg)": 300,
+          "Total volume (Cubic Feet)": 100
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45847.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-002",
+          "Total Consignment": 15,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 70,
+          "Vehicle Weight Utilisation (%)": 40,
+          "Total weight (Kg)": 120,
+          "Total volume (Cubic Feet)": 30
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45848.5,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-161",
+          "Total Consignment": 25,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 100,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 250,
+          "Total volume (Cubic Feet)": 90
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45848.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-003",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 85,
+          "Vehicle Weight Utilisation (%)": 55,
+          "Total weight (Kg)": 180,
+          "Total volume (Cubic Feet)": 45
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45849.5,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-162",
+          "Total Consignment": 35,
+          "Total Delivery Consignment": 34,
+          "Vehicle Volume Utilisation (%)": 90,
+          "Vehicle Weight Utilisation (%)": 70,
+          "Total weight (Kg)": 320,
+          "Total volume (Cubic Feet)": 110
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45849.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-004",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 60,
+          "Vehicle Weight Utilisation (%)": 35,
+          "Total weight (Kg)": 90,
+          "Total volume (Cubic Feet)": 25
+        },
+        // More data in the same format
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45846.7,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-001",
+          "Total Consignment": 8,
+          "Total Delivery Consignment": 7,
+          "Vehicle Volume Utilisation (%)": 75,
+          "Vehicle Weight Utilisation (%)": 65,
+          "Total weight (Kg)": 400,
+          "Total volume (Cubic Feet)": 150
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45846.8,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-005",
+          "Total Consignment": 25,
+          "Total Delivery Consignment": 22,
+          "Vehicle Volume Utilisation (%)": 88,
+          "Vehicle Weight Utilisation (%)": 72,
+          "Total weight (Kg)": 280,
+          "Total volume (Cubic Feet)": 60
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45847.1,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-010",
+          "Total Consignment": 18,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 92,
+          "Vehicle Weight Utilisation (%)": 78,
+          "Total weight (Kg)": 500,
+          "Total volume (Cubic Feet)": 180
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45847.2,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-002",
+          "Total Consignment": 7,
+          "Total Delivery Consignment": 6,
+          "Vehicle Volume Utilisation (%)": 55,
+          "Vehicle Weight Utilisation (%)": 30,
+          "Total weight (Kg)": 80,
+          "Total volume (Cubic Feet)": 20
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45850.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-163",
+          "Total Consignment": 28,
+          "Total Delivery Consignment": 27,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 85,
+          "Total weight (Kg)": 350,
+          "Total volume (Cubic Feet)": 120
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45850.1,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-002",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 80,
+          "Vehicle Weight Utilisation (%)": 70,
+          "Total weight (Kg)": 450,
+          "Total volume (Cubic Feet)": 160
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45850.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-MKT-003",
+          "Total Consignment": 14,
+          "Total Delivery Consignment": 12,
+          "Vehicle Volume Utilisation (%)": 70,
+          "Vehicle Weight Utilisation (%)": 45,
+          "Total weight (Kg)": 150,
+          "Total volume (Cubic Feet)": 35
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45850.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-005",
+          "Total Consignment": 9,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 100,
+          "Vehicle Weight Utilisation (%)": 90,
+          "Total weight (Kg)": 220,
+          "Total volume (Cubic Feet)": 80
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45850.6,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-003",
+          "Total Consignment": 22,
+          "Total Delivery Consignment": 20,
+          "Vehicle Volume Utilisation (%)": 90,
+          "Vehicle Weight Utilisation (%)": 75,
+          "Total weight (Kg)": 380,
+          "Total volume (Cubic Feet)": 130
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45850.7,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-011",
+          "Total Consignment": 6,
+          "Total Delivery Consignment": 5,
+          "Vehicle Volume Utilisation (%)": 65,
+          "Vehicle Weight Utilisation (%)": 40,
+          "Total weight (Kg)": 100,
+          "Total volume (Cubic Feet)": 28
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45851.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-164",
+          "Total Consignment": 32,
+          "Total Delivery Consignment": 30,
+          "Vehicle Volume Utilisation (%)": 93,
+          "Vehicle Weight Utilisation (%)": 77,
+          "Total weight (Kg)": 310,
+          "Total volume (Cubic Feet)": 105
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45851.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-006",
+          "Total Consignment": 18,
+          "Total Delivery Consignment": 16,
+          "Vehicle Volume Utilisation (%)": 78,
+          "Vehicle Weight Utilisation (%)": 58,
+          "Total weight (Kg)": 190,
+          "Total volume (Cubic Feet)": 40
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45851.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-012",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 19,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 82,
+          "Total weight (Kg)": 480,
+          "Total volume (Cubic Feet)": 170
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45851.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-006",
+          "Total Consignment": 11,
+          "Total Delivery Consignment": 10,
+          "Vehicle Volume Utilisation (%)": 62,
+          "Vehicle Weight Utilisation (%)": 38,
+          "Total weight (Kg)": 95,
+          "Total volume (Cubic Feet)": 27
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45851.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-004",
+          "Total Consignment": 27,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 91,
+          "Vehicle Weight Utilisation (%)": 76,
+          "Total weight (Kg)": 390,
+          "Total volume (Cubic Feet)": 135
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45851.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-004",
+          "Total Consignment": 16,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 73,
+          "Vehicle Weight Utilisation (%)": 48,
+          "Total weight (Kg)": 160,
+          "Total volume (Cubic Feet)": 38
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45852.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-165",
+          "Total Consignment": 38,
+          "Total Delivery Consignment": 37,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 88,
+          "Total weight (Kg)": 420,
+          "Total volume (Cubic Feet)": 145
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45852.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-007",
+          "Total Consignment": 13,
+          "Total Delivery Consignment": 12,
+          "Vehicle Volume Utilisation (%)": 68,
+          "Vehicle Weight Utilisation (%)": 42,
+          "Total weight (Kg)": 110,
+          "Total volume (Cubic Feet)": 32
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45852.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-013",
+          "Total Consignment": 24,
+          "Total Delivery Consignment": 23,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 550,
+          "Total volume (Cubic Feet)": 190
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45852.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-007",
+          "Total Consignment": 17,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 76,
+          "Vehicle Weight Utilisation (%)": 52,
+          "Total weight (Kg)": 200,
+          "Total volume (Cubic Feet)": 50
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45852.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-005",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 94,
+          "Vehicle Weight Utilisation (%)": 79,
+          "Total weight (Kg)": 410,
+          "Total volume (Cubic Feet)": 140
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45852.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-005",
+          "Total Consignment": 8,
+          "Total Delivery Consignment": 7,
+          "Vehicle Volume Utilisation (%)": 58,
+          "Vehicle Weight Utilisation (%)": 33,
+          "Total weight (Kg)": 90,
+          "Total volume (Cubic Feet)": 24
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45853.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-166",
+          "Total Consignment": 40,
+          "Total Delivery Consignment": 38,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 370,
+          "Total volume (Cubic Feet)": 125
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45853.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-008",
+          "Total Consignment": 19,
+          "Total Delivery Consignment": 17,
+          "Vehicle Volume Utilisation (%)": 81,
+          "Vehicle Weight Utilisation (%)": 60,
+          "Total weight (Kg)": 210,
+          "Total volume (Cubic Feet)": 48
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45853.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-014",
+          "Total Consignment": 26,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 87,
+          "Total weight (Kg)": 580,
+          "Total volume (Cubic Feet)": 200
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45853.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-008",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 60,
+          "Vehicle Weight Utilisation (%)": 35,
+          "Total weight (Kg)": 105,
+          "Total volume (Cubic Feet)": 29
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45853.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-006",
+          "Total Consignment": 33,
+          "Total Delivery Consignment": 31,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 430,
+          "Total volume (Cubic Feet)": 155
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45853.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-006",
+          "Total Consignment": 15,
+          "Total Delivery Consignment": 13,
+          "Vehicle Volume Utilisation (%)": 71,
+          "Vehicle Weight Utilisation (%)": 46,
+          "Total weight (Kg)": 170,
+          "Total volume (Cubic Feet)": 42
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45854.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-167",
+          "Total Consignment": 29,
+          "Total Delivery Consignment": 28,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 84,
+          "Total weight (Kg)": 330,
+          "Total volume (Cubic Feet)": 115
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45854.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-009",
+          "Total Consignment": 21,
+          "Total Delivery Consignment": 19,
+          "Vehicle Volume Utilisation (%)": 83,
+          "Vehicle Weight Utilisation (%)": 62,
+          "Total weight (Kg)": 230,
+          "Total volume (Cubic Feet)": 55
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45854.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-015",
+          "Total Consignment": 31,
+          "Total Delivery Consignment": 30,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 86,
+          "Total weight (Kg)": 600,
+          "Total volume (Cubic Feet)": 210
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45854.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-009",
+          "Total Consignment": 13,
+          "Total Delivery Consignment": 12,
+          "Vehicle Volume Utilisation (%)": 67,
+          "Vehicle Weight Utilisation (%)": 40,
+          "Total weight (Kg)": 115,
+          "Total volume (Cubic Feet)": 31
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45854.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-007",
+          "Total Consignment": 36,
+          "Total Delivery Consignment": 35,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 82,
+          "Total weight (Kg)": 460,
+          "Total volume (Cubic Feet)": 165
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45854.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-007",
+          "Total Consignment": 11,
+          "Total Delivery Consignment": 10,
+          "Vehicle Volume Utilisation (%)": 64,
+          "Vehicle Weight Utilisation (%)": 37,
+          "Total weight (Kg)": 98,
+          "Total volume (Cubic Feet)": 26
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45855.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-168",
+          "Total Consignment": 34,
+          "Total Delivery Consignment": 33,
+          "Vehicle Volume Utilisation (%)": 92,
+          "Vehicle Weight Utilisation (%)": 78,
+          "Total weight (Kg)": 300,
+          "Total volume (Cubic Feet)": 100
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45855.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-010",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 79,
+          "Vehicle Weight Utilisation (%)": 59,
+          "Total weight (Kg)": 205,
+          "Total volume (Cubic Feet)": 45
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45855.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-016",
+          "Total Consignment": 27,
+          "Total Delivery Consignment": 26,
+          "Vehicle Volume Utilisation (%)": 94,
+          "Vehicle Weight Utilisation (%)": 81,
+          "Total weight (Kg)": 520,
+          "Total volume (Cubic Feet)": 185
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45855.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-010",
+          "Total Consignment": 16,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 72,
+          "Vehicle Weight Utilisation (%)": 47,
+          "Total weight (Kg)": 155,
+          "Total volume (Cubic Feet)": 36
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45855.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-008",
+          "Total Consignment": 31,
+          "Total Delivery Consignment": 30,
+          "Vehicle Volume Utilisation (%)": 93,
+          "Vehicle Weight Utilisation (%)": 77,
+          "Total weight (Kg)": 400,
+          "Total volume (Cubic Feet)": 138
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45855.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-008",
+          "Total Consignment": 9,
+          "Total Delivery Consignment": 8,
+          "Vehicle Volume Utilisation (%)": 57,
+          "Vehicle Weight Utilisation (%)": 32,
+          "Total weight (Kg)": 85,
+          "Total volume (Cubic Feet)": 23
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45856.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-169",
+          "Total Consignment": 39,
+          "Total Delivery Consignment": 38,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 89,
+          "Total weight (Kg)": 430,
+          "Total volume (Cubic Feet)": 150
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45856.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-011",
+          "Total Consignment": 14,
+          "Total Delivery Consignment": 13,
+          "Vehicle Volume Utilisation (%)": 69,
+          "Vehicle Weight Utilisation (%)": 44,
+          "Total weight (Kg)": 120,
+          "Total volume (Cubic Feet)": 34
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45856.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-017",
+          "Total Consignment": 25,
+          "Total Delivery Consignment": 24,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 570,
+          "Total volume (Cubic Feet)": 195
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45856.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-011",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 63,
+          "Vehicle Weight Utilisation (%)": 39,
+          "Total weight (Kg)": 100,
+          "Total volume (Cubic Feet)": 28
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45856.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-009",
+          "Total Consignment": 28,
+          "Total Delivery Consignment": 27,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 415,
+          "Total volume (Cubic Feet)": 142
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45856.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-009",
+          "Total Consignment": 17,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 74,
+          "Vehicle Weight Utilisation (%)": 49,
+          "Total weight (Kg)": 165,
+          "Total volume (Cubic Feet)": 40
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45857.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-170",
+          "Total Consignment": 36,
+          "Total Delivery Consignment": 35,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 86,
+          "Total weight (Kg)": 380,
+          "Total volume (Cubic Feet)": 130
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45857.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-012",
+          "Total Consignment": 23,
+          "Total Delivery Consignment": 21,
+          "Vehicle Volume Utilisation (%)": 85,
+          "Vehicle Weight Utilisation (%)": 64,
+          "Total weight (Kg)": 240,
+          "Total volume (Cubic Feet)": 58
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45857.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-018",
+          "Total Consignment": 29,
+          "Total Delivery Consignment": 28,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 85,
+          "Total weight (Kg)": 590,
+          "Total volume (Cubic Feet)": 205
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45857.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-012",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 61,
+          "Vehicle Weight Utilisation (%)": 36,
+          "Total weight (Kg)": 92,
+          "Total volume (Cubic Feet)": 25
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45857.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-010",
+          "Total Consignment": 35,
+          "Total Delivery Consignment": 34,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 440,
+          "Total volume (Cubic Feet)": 158
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45857.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-010",
+          "Total Consignment": 13,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 66,
+          "Vehicle Weight Utilisation (%)": 41,
+          "Total weight (Kg)": 110,
+          "Total volume (Cubic Feet)": 30
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45858.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-171",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 94,
+          "Vehicle Weight Utilisation (%)": 79,
+          "Total weight (Kg)": 340,
+          "Total volume (Cubic Feet)": 120
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45858.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-013",
+          "Total Consignment": 15,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 70,
+          "Vehicle Weight Utilisation (%)": 45,
+          "Total weight (Kg)": 130,
+          "Total volume (Cubic Feet)": 36
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45858.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-019",
+          "Total Consignment": 22,
+          "Total Delivery Consignment": 21,
+          "Vehicle Volume Utilisation (%)": 90,
+          "Vehicle Weight Utilisation (%)": 75,
+          "Total weight (Kg)": 490,
+          "Total volume (Cubic Feet)": 175
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45858.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-013",
+          "Total Consignment": 18,
+          "Total Delivery Consignment": 16,
+          "Vehicle Volume Utilisation (%)": 77,
+          "Vehicle Weight Utilisation (%)": 53,
+          "Total weight (Kg)": 210,
+          "Total volume (Cubic Feet)": 52
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45858.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-011",
+          "Total Consignment": 32,
+          "Total Delivery Consignment": 31,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 81,
+          "Total weight (Kg)": 425,
+          "Total volume (Cubic Feet)": 148
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45858.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-011",
+          "Total Consignment": 19,
+          "Total Delivery Consignment": 17,
+          "Vehicle Volume Utilisation (%)": 80,
+          "Vehicle Weight Utilisation (%)": 56,
+          "Total weight (Kg)": 220,
+          "Total volume (Cubic Feet)": 50
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45859.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-172",
+          "Total Consignment": 26,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 91,
+          "Vehicle Weight Utilisation (%)": 76,
+          "Total weight (Kg)": 290,
+          "Total volume (Cubic Feet)": 95
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45859.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-014",
+          "Total Consignment": 11,
+          "Total Delivery Consignment": 10,
+          "Vehicle Volume Utilisation (%)": 65,
+          "Vehicle Weight Utilisation (%)": 40,
+          "Total weight (Kg)": 105,
+          "Total volume (Cubic Feet)": 29
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45859.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-020",
+          "Total Consignment": 34,
+          "Total Delivery Consignment": 33,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 88,
+          "Total weight (Kg)": 610,
+          "Total volume (Cubic Feet)": 215
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45859.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-014",
+          "Total Consignment": 14,
+          "Total Delivery Consignment": 13,
+          "Vehicle Volume Utilisation (%)": 69,
+          "Vehicle Weight Utilisation (%)": 43,
+          "Total weight (Kg)": 125,
+          "Total volume (Cubic Feet)": 33
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45859.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-012",
+          "Total Consignment": 29,
+          "Total Delivery Consignment": 28,
+          "Vehicle Volume Utilisation (%)": 92,
+          "Vehicle Weight Utilisation (%)": 77,
+          "Total weight (Kg)": 360,
+          "Total volume (Cubic Feet)": 128
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45859.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-012",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 62,
+          "Vehicle Weight Utilisation (%)": 37,
+          "Total weight (Kg)": 95,
+          "Total volume (Cubic Feet)": 26
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45860.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-173",
+          "Total Consignment": 37,
+          "Total Delivery Consignment": 36,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 82,
+          "Total weight (Kg)": 400,
+          "Total volume (Cubic Feet)": 140
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45860.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-015",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 82,
+          "Vehicle Weight Utilisation (%)": 60,
+          "Total weight (Kg)": 215,
+          "Total volume (Cubic Feet)": 48
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45860.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-021",
+          "Total Consignment": 28,
+          "Total Delivery Consignment": 27,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 84,
+          "Total weight (Kg)": 550,
+          "Total volume (Cubic Feet)": 190
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45860.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-015",
+          "Total Consignment": 16,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 75,
+          "Vehicle Weight Utilisation (%)": 50,
+          "Total weight (Kg)": 180,
+          "Total volume (Cubic Feet)": 44
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45860.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-013",
+          "Total Consignment": 38,
+          "Total Delivery Consignment": 37,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 86,
+          "Total weight (Kg)": 470,
+          "Total volume (Cubic Feet)": 170
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45860.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-013",
+          "Total Consignment": 7,
+          "Total Delivery Consignment": 6,
+          "Vehicle Volume Utilisation (%)": 50,
+          "Vehicle Weight Utilisation (%)": 28,
+          "Total weight (Kg)": 75,
+          "Total volume (Cubic Feet)": 18
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45861.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-174",
+          "Total Consignment": 31,
+          "Total Delivery Consignment": 30,
+          "Vehicle Volume Utilisation (%)": 93,
+          "Vehicle Weight Utilisation (%)": 78,
+          "Total weight (Kg)": 350,
+          "Total volume (Cubic Feet)": 125
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45861.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-016",
+          "Total Consignment": 24,
+          "Total Delivery Consignment": 22,
+          "Vehicle Volume Utilisation (%)": 86,
+          "Vehicle Weight Utilisation (%)": 65,
+          "Total weight (Kg)": 250,
+          "Total volume (Cubic Feet)": 60
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45861.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-022",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 87,
+          "Total weight (Kg)": 600,
+          "Total volume (Cubic Feet)": 210
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45861.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-016",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 60,
+          "Vehicle Weight Utilisation (%)": 35,
+          "Total weight (Kg)": 90,
+          "Total volume (Cubic Feet)": 25
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45861.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-014",
+          "Total Consignment": 39,
+          "Total Delivery Consignment": 38,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 89,
+          "Total weight (Kg)": 480,
+          "Total volume (Cubic Feet)": 175
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45861.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-014",
+          "Total Consignment": 18,
+          "Total Delivery Consignment": 16,
+          "Vehicle Volume Utilisation (%)": 78,
+          "Vehicle Weight Utilisation (%)": 55,
+          "Total weight (Kg)": 200,
+          "Total volume (Cubic Feet)": 48
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45862.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-175",
+          "Total Consignment": 27,
+          "Total Delivery Consignment": 26,
+          "Vehicle Volume Utilisation (%)": 92,
+          "Vehicle Weight Utilisation (%)": 77,
+          "Total weight (Kg)": 310,
+          "Total volume (Cubic Feet)": 105
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45862.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-017",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 66,
+          "Vehicle Weight Utilisation (%)": 41,
+          "Total weight (Kg)": 110,
+          "Total volume (Cubic Feet)": 30
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45862.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-023",
+          "Total Consignment": 25,
+          "Total Delivery Consignment": 24,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 530,
+          "Total volume (Cubic Feet)": 185
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45862.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-017",
+          "Total Consignment": 15,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 70,
+          "Vehicle Weight Utilisation (%)": 46,
+          "Total weight (Kg)": 160,
+          "Total volume (Cubic Feet)": 38
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45862.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-015",
+          "Total Consignment": 34,
+          "Total Delivery Consignment": 33,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 84,
+          "Total weight (Kg)": 450,
+          "Total volume (Cubic Feet)": 160
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45862.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-015",
+          "Total Consignment": 9,
+          "Total Delivery Consignment": 8,
+          "Vehicle Volume Utilisation (%)": 59,
+          "Vehicle Weight Utilisation (%)": 34,
+          "Total weight (Kg)": 88,
+          "Total volume (Cubic Feet)": 24
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45863.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-176",
+          "Total Consignment": 40,
+          "Total Delivery Consignment": 39,
+          "Vehicle Volume Utilisation (%)": 100,
+          "Vehicle Weight Utilisation (%)": 90,
+          "Total weight (Kg)": 440,
+          "Total volume (Cubic Feet)": 155
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45863.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-018",
+          "Total Consignment": 21,
+          "Total Delivery Consignment": 19,
+          "Vehicle Volume Utilisation (%)": 83,
+          "Vehicle Weight Utilisation (%)": 62,
+          "Total weight (Kg)": 230,
+          "Total volume (Cubic Feet)": 55
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45863.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-024",
+          "Total Consignment": 32,
+          "Total Delivery Consignment": 31,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 88,
+          "Total weight (Kg)": 620,
+          "Total volume (Cubic Feet)": 220
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45863.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-018",
+          "Total Consignment": 11,
+          "Total Delivery Consignment": 10,
+          "Vehicle Volume Utilisation (%)": 63,
+          "Vehicle Weight Utilisation (%)": 38,
+          "Total weight (Kg)": 100,
+          "Total volume (Cubic Feet)": 27
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45863.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-016",
+          "Total Consignment": 26,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 90,
+          "Vehicle Weight Utilisation (%)": 75,
+          "Total weight (Kg)": 370,
+          "Total volume (Cubic Feet)": 130
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45863.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-016",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 81,
+          "Vehicle Weight Utilisation (%)": 58,
+          "Total weight (Kg)": 225,
+          "Total volume (Cubic Feet)": 53
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45864.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-177",
+          "Total Consignment": 35,
+          "Total Delivery Consignment": 34,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 390,
+          "Total volume (Cubic Feet)": 135
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45864.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-019",
+          "Total Consignment": 17,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 74,
+          "Vehicle Weight Utilisation (%)": 49,
+          "Total weight (Kg)": 175,
+          "Total volume (Cubic Feet)": 41
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45864.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-025",
+          "Total Consignment": 23,
+          "Total Delivery Consignment": 22,
+          "Vehicle Volume Utilisation (%)": 93,
+          "Vehicle Weight Utilisation (%)": 79,
+          "Total weight (Kg)": 500,
+          "Total volume (Cubic Feet)": 178
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45864.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-019",
+          "Total Consignment": 13,
+          "Total Delivery Consignment": 12,
+          "Vehicle Volume Utilisation (%)": 68,
+          "Vehicle Weight Utilisation (%)": 42,
+          "Total weight (Kg)": 115,
+          "Total volume (Cubic Feet)": 31
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45864.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-017",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 94,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 405,
+          "Total volume (Cubic Feet)": 145
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45864.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-017",
+          "Total Consignment": 16,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 72,
+          "Vehicle Weight Utilisation (%)": 47,
+          "Total weight (Kg)": 155,
+          "Total Volume (Cubic Feet)": 36
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45865.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-178",
+          "Total Consignment": 33,
+          "Total Delivery Consignment": 32,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 81,
+          "Total weight (Kg)": 375,
+          "Total volume (Cubic Feet)": 130
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45865.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-020",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 61,
+          "Vehicle Weight Utilisation (%)": 36,
+          "Total weight (Kg)": 95,
+          "Total volume (Cubic Feet)": 26
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45865.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-026",
+          "Total Consignment": 28,
+          "Total Delivery Consignment": 27,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 85,
+          "Total weight (Kg)": 580,
+          "Total volume (Cubic Feet)": 200
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45865.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-020",
+          "Total Consignment": 19,
+          "Total Delivery Consignment": 17,
+          "Vehicle Volume Utilisation (%)": 79,
+          "Vehicle Weight Utilisation (%)": 55,
+          "Total weight (Kg)": 210,
+          "Total volume (Cubic Feet)": 50
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45865.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-018",
+          "Total Consignment": 37,
+          "Total Delivery Consignment": 36,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 87,
+          "Total weight (Kg)": 470,
+          "Total volume (Cubic Feet)": 168
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45865.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-018",
+          "Total Consignment": 8,
+          "Total Delivery Consignment": 7,
+          "Vehicle Volume Utilisation (%)": 55,
+          "Vehicle Weight Utilisation (%)": 30,
+          "Total weight (Kg)": 80,
+          "Total volume (Cubic Feet)": 20
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45866.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-179",
+          "Total Consignment": 38,
+          "Total Delivery Consignment": 37,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 89,
+          "Total weight (Kg)": 430,
+          "Total volume (Cubic Feet)": 150
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45866.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-021",
+          "Total Consignment": 14,
+          "Total Delivery Consignment": 13,
+          "Vehicle Volume Utilisation (%)": 69,
+          "Vehicle Weight Utilisation (%)": 44,
+          "Total weight (Kg)": 120,
+          "Total volume (Cubic Feet)": 34
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45866.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-027",
+          "Total Consignment": 25,
+          "Total Delivery Consignment": 24,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 570,
+          "Total volume (Cubic Feet)": 195
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45866.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-021",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 63,
+          "Vehicle Weight Utilisation (%)": 39,
+          "Total weight (Kg)": 100,
+          "Total volume (Cubic Feet)": 28
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45866.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-019",
+          "Total Consignment": 28,
+          "Total Delivery Consignment": 27,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 415,
+          "Total volume (Cubic Feet)": 142
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45866.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-019",
+          "Total Consignment": 17,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 74,
+          "Vehicle Weight Utilisation (%)": 49,
+          "Total weight (Kg)": 165,
+          "Total volume (Cubic Feet)": 40
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45867.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-180",
+          "Total Consignment": 36,
+          "Total Delivery Consignment": 35,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 86,
+          "Total weight (Kg)": 380,
+          "Total volume (Cubic Feet)": 130
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45867.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-022",
+          "Total Consignment": 23,
+          "Total Delivery Consignment": 21,
+          "Vehicle Volume Utilisation (%)": 85,
+          "Vehicle Weight Utilisation (%)": 64,
+          "Total weight (Kg)": 240,
+          "Total volume (Cubic Feet)": 58
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45867.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-028",
+          "Total Consignment": 29,
+          "Total Delivery Consignment": 28,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 85,
+          "Total weight (Kg)": 590,
+          "Total volume (Cubic Feet)": 205
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45867.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-022",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 61,
+          "Vehicle Weight Utilisation (%)": 36,
+          "Total weight (Kg)": 92,
+          "Total volume (Cubic Feet)": 25
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45867.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-020",
+          "Total Consignment": 35,
+          "Total Delivery Consignment": 34,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 440,
+          "Total volume (Cubic Feet)": 158
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45867.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-020",
+          "Total Consignment": 13,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 66,
+          "Vehicle Weight Utilisation (%)": 41,
+          "Total weight (Kg)": 110,
+          "Total volume (Cubic Feet)": 30
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45868.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-181",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 94,
+          "Vehicle Weight Utilisation (%)": 79,
+          "Total weight (Kg)": 340,
+          "Total volume (Cubic Feet)": 120
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45868.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-023",
+          "Total Consignment": 15,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 70,
+          "Vehicle Weight Utilisation (%)": 45,
+          "Total weight (Kg)": 130,
+          "Total volume (Cubic Feet)": 36
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45868.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-029",
+          "Total Consignment": 22,
+          "Total Delivery Consignment": 21,
+          "Vehicle Volume Utilisation (%)": 90,
+          "Vehicle Weight Utilisation (%)": 75,
+          "Total weight (Kg)": 490,
+          "Total volume (Cubic Feet)": 175
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45868.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-023",
+          "Total Consignment": 18,
+          "Total Delivery Consignment": 16,
+          "Vehicle Volume Utilisation (%)": 77,
+          "Vehicle Weight Utilisation (%)": 53,
+          "Total weight (Kg)": 210,
+          "Total volume (Cubic Feet)": 52
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45868.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-021",
+          "Total Consignment": 32,
+          "Total Delivery Consignment": 31,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 81,
+          "Total weight (Kg)": 425,
+          "Total volume (Cubic Feet)": 148
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45868.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-021",
+          "Total Consignment": 19,
+          "Total Delivery Consignment": 17,
+          "Vehicle Volume Utilisation (%)": 80,
+          "Vehicle Weight Utilisation (%)": 56,
+          "Total weight (Kg)": 220,
+          "Total volume (Cubic Feet)": 50
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45869.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-182",
+          "Total Consignment": 26,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 91,
+          "Vehicle Weight Utilisation (%)": 76,
+          "Total weight (Kg)": 290,
+          "Total volume (Cubic Feet)": 95
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45869.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-024",
+          "Total Consignment": 11,
+          "Total Delivery Consignment": 10,
+          "Vehicle Volume Utilisation (%)": 65,
+          "Vehicle Weight Utilisation (%)": 40,
+          "Total weight (Kg)": 105,
+          "Total volume (Cubic Feet)": 29
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45869.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-030",
+          "Total Consignment": 34,
+          "Total Delivery Consignment": 33,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 88,
+          "Total weight (Kg)": 610,
+          "Total volume (Cubic Feet)": 215
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45869.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-024",
+          "Total Consignment": 14,
+          "Total Delivery Consignment": 13,
+          "Vehicle Volume Utilisation (%)": 69,
+          "Vehicle Weight Utilisation (%)": 43,
+          "Total weight (Kg)": 125,
+          "Total volume (Cubic Feet)": 33
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45869.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-022",
+          "Total Consignment": 29,
+          "Total Delivery Consignment": 28,
+          "Vehicle Volume Utilisation (%)": 92,
+          "Vehicle Weight Utilisation (%)": 77,
+          "Total weight (Kg)": 360,
+          "Total volume (Cubic Feet)": 128
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45869.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-022",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 62,
+          "Vehicle Weight Utilisation (%)": 37,
+          "Total weight (Kg)": 95,
+          "Total volume (Cubic Feet)": 26
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45870.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-183",
+          "Total Consignment": 37,
+          "Total Delivery Consignment": 36,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 82,
+          "Total weight (Kg)": 400,
+          "Total volume (Cubic Feet)": 140
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45870.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-025",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 82,
+          "Vehicle Weight Utilisation (%)": 60,
+          "Total weight (Kg)": 215,
+          "Total volume (Cubic Feet)": 48
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45870.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-031",
+          "Total Consignment": 28,
+          "Total Delivery Consignment": 27,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 84,
+          "Total weight (Kg)": 550,
+          "Total volume (Cubic Feet)": 190
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45870.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-025",
+          "Total Consignment": 16,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 75,
+          "Vehicle Weight Utilisation (%)": 50,
+          "Total weight (Kg)": 180,
+          "Total volume (Cubic Feet)": 44
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45870.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-023",
+          "Total Consignment": 38,
+          "Total Delivery Consignment": 37,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 86,
+          "Total weight (Kg)": 470,
+          "Total volume (Cubic Feet)": 170
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45870.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-023",
+          "Total Consignment": 7,
+          "Total Delivery Consignment": 6,
+          "Vehicle Volume Utilisation (%)": 50,
+          "Vehicle Weight Utilisation (%)": 28,
+          "Total weight (Kg)": 75,
+          "Total volume (Cubic Feet)": 18
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45871.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-184",
+          "Total Consignment": 31,
+          "Total Delivery Consignment": 30,
+          "Vehicle Volume Utilisation (%)": 93,
+          "Vehicle Weight Utilisation (%)": 78,
+          "Total weight (Kg)": 350,
+          "Total volume (Cubic Feet)": 125
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45871.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-026",
+          "Total Consignment": 24,
+          "Total Delivery Consignment": 22,
+          "Vehicle Volume Utilisation (%)": 86,
+          "Vehicle Weight Utilisation (%)": 65,
+          "Total weight (Kg)": 250,
+          "Total volume (Cubic Feet)": 60
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45871.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-032",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 98,
+          "Vehicle Weight Utilisation (%)": 87,
+          "Total weight (Kg)": 600,
+          "Total volume (Cubic Feet)": 210
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45871.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-026",
+          "Total Consignment": 10,
+          "Total Delivery Consignment": 9,
+          "Vehicle Volume Utilisation (%)": 60,
+          "Vehicle Weight Utilisation (%)": 35,
+          "Total weight (Kg)": 90,
+          "Total volume (Cubic Feet)": 25
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45871.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-024",
+          "Total Consignment": 39,
+          "Total Delivery Consignment": 38,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 89,
+          "Total weight (Kg)": 480,
+          "Total volume (Cubic Feet)": 175
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45871.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-024",
+          "Total Consignment": 18,
+          "Total Delivery Consignment": 16,
+          "Vehicle Volume Utilisation (%)": 78,
+          "Vehicle Weight Utilisation (%)": 55,
+          "Total weight (Kg)": 200,
+          "Total volume (Cubic Feet)": 48
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45872.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-185",
+          "Total Consignment": 27,
+          "Total Delivery Consignment": 26,
+          "Vehicle Volume Utilisation (%)": 92,
+          "Vehicle Weight Utilisation (%)": 77,
+          "Total weight (Kg)": 310,
+          "Total volume (Cubic Feet)": 105
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45872.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-027",
+          "Total Consignment": 12,
+          "Total Delivery Consignment": 11,
+          "Vehicle Volume Utilisation (%)": 66,
+          "Vehicle Weight Utilisation (%)": 41,
+          "Total weight (Kg)": 110,
+          "Total volume (Cubic Feet)": 30
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45872.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-033",
+          "Total Consignment": 25,
+          "Total Delivery Consignment": 24,
+          "Vehicle Volume Utilisation (%)": 95,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 530,
+          "Total volume (Cubic Feet)": 185
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45872.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-027",
+          "Total Consignment": 15,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 70,
+          "Vehicle Weight Utilisation (%)": 46,
+          "Total weight (Kg)": 160,
+          "Total volume (Cubic Feet)": 38
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45872.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-025",
+          "Total Consignment": 34,
+          "Total Delivery Consignment": 33,
+          "Vehicle Volume Utilisation (%)": 97,
+          "Vehicle Weight Utilisation (%)": 84,
+          "Total weight (Kg)": 450,
+          "Total volume (Cubic Feet)": 160
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45872.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-025",
+          "Total Consignment": 9,
+          "Total Delivery Consignment": 8,
+          "Vehicle Volume Utilisation (%)": 59,
+          "Vehicle Weight Utilisation (%)": 34,
+          "Total weight (Kg)": 88,
+          "Total volume (Cubic Feet)": 24
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45873.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-186",
+          "Total Consignment": 40,
+          "Total Delivery Consignment": 39,
+          "Vehicle Volume Utilisation (%)": 100,
+          "Vehicle Weight Utilisation (%)": 90,
+          "Total weight (Kg)": 440,
+          "Total volume (Cubic Feet)": 155
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45873.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-028",
+          "Total Consignment": 21,
+          "Total Delivery Consignment": 19,
+          "Vehicle Volume Utilisation (%)": 83,
+          "Vehicle Weight Utilisation (%)": 62,
+          "Total weight (Kg)": 230,
+          "Total volume (Cubic Feet)": 55
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45873.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-034",
+          "Total Consignment": 32,
+          "Total Delivery Consignment": 31,
+          "Vehicle Volume Utilisation (%)": 99,
+          "Vehicle Weight Utilisation (%)": 88,
+          "Total weight (Kg)": 620,
+          "Total volume (Cubic Feet)": 220
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45873.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-028",
+          "Total Consignment": 11,
+          "Total Delivery Consignment": 10,
+          "Vehicle Volume Utilisation (%)": 63,
+          "Vehicle Weight Utilisation (%)": 38,
+          "Total weight (Kg)": 100,
+          "Total volume (Cubic Feet)": 27
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45873.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-026",
+          "Total Consignment": 26,
+          "Total Delivery Consignment": 25,
+          "Vehicle Volume Utilisation (%)": 90,
+          "Vehicle Weight Utilisation (%)": 75,
+          "Total weight (Kg)": 370,
+          "Total volume (Cubic Feet)": 130
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45873.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-026",
+          "Total Consignment": 20,
+          "Total Delivery Consignment": 18,
+          "Vehicle Volume Utilisation (%)": 81,
+          "Vehicle Weight Utilisation (%)": 58,
+          "Total weight (Kg)": 225,
+          "Total volume (Cubic Feet)": 53
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45874.0,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "RH-HK-187",
+          "Total Consignment": 35,
+          "Total Delivery Consignment": 34,
+          "Vehicle Volume Utilisation (%)": 96,
+          "Vehicle Weight Utilisation (%)": 83,
+          "Total weight (Kg)": 390,
+          "Total volume (Cubic Feet)": 135
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45874.1,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "JED-MKT-029",
+          "Total Consignment": 17,
+          "Total Delivery Consignment": 15,
+          "Vehicle Volume Utilisation (%)": 74,
+          "Vehicle Weight Utilisation (%)": 49,
+          "Total weight (Kg)": 175,
+          "Total volume (Cubic Feet)": 41
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45874.2,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "DMM-VH-035",
+          "Total Consignment": 23,
+          "Total Delivery Consignment": 22,
+          "Vehicle Volume Utilisation (%)": 93,
+          "Vehicle Weight Utilisation (%)": 79,
+          "Total weight (Kg)": 500,
+          "Total volume (Cubic Feet)": 178
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "RIYADH",
+          "Start Time": 45874.3,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "PPS-029",
+          "Total Consignment": 13,
+          "Total Delivery Consignment": 12,
+          "Vehicle Volume Utilisation (%)": 68,
+          "Vehicle Weight Utilisation (%)": 42,
+          "Total weight (Kg)": 115,
+          "Total volume (Cubic Feet)": 31
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "JEDDAH",
+          "Start Time": 45874.4,
+          "Vehicle Type": "DEDICATED",
+          "Vehicle Number": "JED-TRK-027",
+          "Total Consignment": 30,
+          "Total Delivery Consignment": 29,
+          "Vehicle Volume Utilisation (%)": 94,
+          "Vehicle Weight Utilisation (%)": 80,
+          "Total weight (Kg)": 405,
+          "Total volume (Cubic Feet)": 145
+        },
+        {
+          "PLANNING SITE NAME (DC NAME)": "DAMMAM",
+          "Start Time": 45874.5,
+          "Vehicle Type": "MARKET",
+          "Vehicle Number": "DMM-FRT-027",
+          "Total Consignment": 16,
+          "Total Delivery Consignment": 14,
+          "Vehicle Volume Utilisation (%)": 72,
+          "Vehicle Weight Utilisation (%)": 47,
+          "Total weight (Kg)": 155,
+          "Total volume (Cubic Feet)": 36
+        }
+      ];
+
+      // Utility: Excel serial date to YYYY-MM-DD
+      function excelDateToYMD(serial) {
+        if (!serial || isNaN(serial)) return '';
+        const utc_days = Math.floor(serial - 25569);
+        const utc_value = utc_days * 86400;
+        const date_info = new Date(utc_value * 1000);
+        const ms = Math.round((serial - Math.floor(serial)) * 86400 * 1000);
+        date_info.setTime(date_info.getTime() + ms);
+        return date_info.toISOString().slice(0, 10);
+      }
+
+      // Utility: CSV export
+      function exportToCSV(data, filename) {
+        const csvRows = [];
+        const headers = Object.keys(data[0]);
+        csvRows.push(headers.join(','));
+        for (const row of data) {
+          csvRows.push(headers.map(h => `"${((row[h] || '') + '').replace(/"/g, '""')}"`).join(','));
+        }
+        const csvString = csvRows.join('\n');
+        const blob = new Blob([csvString], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+      }
+
+      // Utility: Excel export
+      function exportToExcel(data, filename) {
+        const ws = window.XLSX.utils.json_to_sheet(data);
+        const wb = window.XLSX.utils.book_new();
+        window.XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        window.XLSX.writeFile(wb, filename);
+      }
+
+      // Chart.js React wrappers
+      function BarChartJS({ data, options, height = 300 }) {
+        const canvasRef = React.useRef(null);
+        const chartRef = React.useRef(null);
+        React.useEffect(() => {
+          if (chartRef.current) chartRef.current.destroy();
+          chartRef.current = new window.Chart(canvasRef.current, {
+            type: 'bar',
+            data,
+            options,
+          });
+          return () => chartRef.current && chartRef.current.destroy();
+        }, [JSON.stringify(data), JSON.stringify(options)]);
+        return <canvas ref={canvasRef} height={height}></canvas>;
+      }
+      function LineChartJS({ data, options, height = 300 }) {
+        const canvasRef = React.useRef(null);
+        const chartRef = React.useRef(null);
+        React.useEffect(() => {
+          if (chartRef.current) chartRef.current.destroy();
+          chartRef.current = new window.Chart(canvasRef.current, {
+            type: 'line',
+            data,
+            options,
+          });
+          return () => chartRef.current && chartRef.current.destroy();
+        }, [JSON.stringify(data), JSON.stringify(options)]);
+        return <canvas ref={canvasRef} height={height}></canvas>;
+      }
+      function PieChartJS({ data, options, height = 220 }) {
+        const canvasRef = React.useRef(null);
+        const chartRef = React.useRef(null);
+        React.useEffect(() => {
+          if (chartRef.current) chartRef.current.destroy();
+          chartRef.current = new window.Chart(canvasRef.current, {
+            type: 'pie',
+            data,
+            options,
+          });
+          return () => chartRef.current && chartRef.current.destroy();
+        }, [JSON.stringify(data), JSON.stringify(options)]);
+        return <canvas ref={canvasRef} height={height}></canvas>;
+      }
+
+      // --- Chart Data Aggregation Helpers ---
+      function aggregateByDate(rows) {
+        if (!Array.isArray(rows) || rows.length === 0) return {};
+        // Returns { [date]: { DEDICATED: {...}, MARKET: {...}, SDR: avg, total: ... } }
+        const result = {};
+        rows.forEach(row => {
+          if (!row || typeof row !== 'object') return;
+          
+          const startTime = row["Start Time"];
+          const vehicleType = row["Vehicle Type"];
+          const totalConsignment = row["Total Consignment"];
+          const totalDeliveryConsignment = row["Total Delivery Consignment"];
+          const volumeUtil = row["Vehicle Volume Utilisation (%)"];
+          
+          if (!startTime || !vehicleType) return;
+          
+          const date = excelDateToYMD(startTime);
+          if (!date) return;
+          
+          const vt = vehicleType;
+          if (!result[date]) {
+            result[date] = { 
+              DEDICATED: { shipments: 0, delivered: 0, volUtil: [], count: 0 }, 
+              MARKET: { shipments: 0, delivered: 0, volUtil: [], count: 0 } 
+            };
+          }
+          
+          if (vt === 'DEDICATED' || vt === 'MARKET') {
+            result[date][vt].shipments += Number(totalConsignment || 0);
+            result[date][vt].delivered += Number(totalDeliveryConsignment || 0);
+            result[date][vt].volUtil.push(Number(volumeUtil || 0));
+            result[date][vt].count += 1;
+          }
+        });
+        
+        // Add SDR% per date (all types)
+        Object.keys(result).forEach(date => {
+          const totalShip = result[date].DEDICATED.shipments + result[date].MARKET.shipments;
+          const totalDel = result[date].DEDICATED.delivered + result[date].MARKET.delivered;
+          result[date].SDR = totalShip > 0 ? (totalDel / totalShip) * 100 : 0;
+        });
+        return result;
+      }
+
+      // Group by date and vehicle type for KPIs
+      function groupByDateAndType(rows) {
+        if (!Array.isArray(rows) || rows.length === 0) return {};
+        
+        const result = {};
+        rows.forEach(row => {
+          if (!row || typeof row !== 'object') return;
+          
+          const startTime = row["Start Time"];
+          const vehicleType = row["Vehicle Type"];
+          
+          if (!startTime || !vehicleType) return;
+          
+          const date = excelDateToYMD(startTime);
+          if (!date) return;
+          
+          const vt = vehicleType;
+          if (!result[date]) result[date] = {};
+          if (!result[date][vt]) result[date][vt] = [];
+          result[date][vt].push(row);
+        });
+        return result;
+      }
+
+      // KPI calculations
+      function calcKPIs(grouped) {
+        if (!grouped || typeof grouped !== 'object') return [];
+        
+        const kpiRows = [];
+        Object.entries(grouped).forEach(([date, vtypes]) => {
+          if (!vtypes || typeof vtypes !== 'object') return;
+          
+          Object.entries(vtypes).forEach(([vt, rows]) => {
+            if (!Array.isArray(rows)) return;
+            
+            const totalConsignment = rows.reduce((a, b) => {
+              if (!b || typeof b !== 'object') return a;
+              return a + Number(b["Total Consignment"] || 0);
+            }, 0);
+            
+            const totalDelivered = rows.reduce((a, b) => {
+              if (!b || typeof b !== 'object') return a;
+              return a + Number(b["Total Delivery Consignment"] || 0);
+            }, 0);
+            
+            const trips = rows.length;
+            const uniqueVehicles = new Set(rows.map(r => r && typeof r === 'object' ? r["Vehicle Number"] : null).filter(Boolean)).size;
+            
+            const avgVolUtil = rows.length > 0
+              ? capUtil(rows.reduce((a, b) => {
+                  if (!b || typeof b !== 'object') return a;
+                  return a + Number(b["Vehicle Volume Utilisation (%)"] || 0);
+                }, 0) / rows.length)
+              : 0;
+            
+            const avgWeightUtil = rows.length > 0
+              ? capUtil(rows.reduce((a, b) => {
+                  if (!b || typeof b !== 'object') return a;
+                  return a + Number(b["Vehicle Weight Utilisation (%)"] || 0);
+                }, 0) / rows.length)
+              : 0;
+            
+            const sdr = totalConsignment > 0 ? (totalDelivered / totalConsignment) * 100 : 0;
+            
+            kpiRows.push({
+              date,
+              vehicleType: vt,
+              totalConsignment,
+              totalDelivered,
+              trips,
+              uniqueVehicles,
+              avgVolUtil,
+              avgWeightUtil,
+              sdr,
+            });
+          });
+        });
+        return kpiRows;
+      }
+
+      // Volume allocation per day
+      function calcVolumeAllocation(grouped) {
+        if (!grouped || typeof grouped !== 'object') return [];
+        
+        const result = [];
+        Object.entries(grouped).forEach(([date, vtypes]) => {
+          if (!vtypes || typeof vtypes !== 'object') return;
+          
+          let total = 0;
+          let byType = {};
+          Object.entries(vtypes).forEach(([vt, rows]) => {
+            if (!Array.isArray(rows)) return;
+            
+            const sum = rows.reduce((a, b) => {
+              if (!b || typeof b !== 'object') return a;
+              return a + Number(b["Total Consignment"] || 0);
+            }, 0);
+            byType[vt] = sum;
+            total += sum;
+          });
+          result.push({
+            date,
+            ...Object.fromEntries(
+              Object.entries(byType).map(([vt, val]) => [vt + "_PCT", total ? (val / total) * 100 : 0])
+            ),
+          });
+        });
+        return result;
+      }
+
+            // Main App
+      function App() {
+        // ALL HOOKS - NO EARLY RETURNS BEFORE THIS POINT
+        const [theme, setTheme] = React.useState('light');
+        const [data, setData] = React.useState(SAMPLE_DATA);
+        const [loading, setLoading] = React.useState(false);
+        const [dateRange, setDateRange] = React.useState({ start: '', end: '' });
+        const [vehicleType, setVehicleType] = React.useState('ALL');
+        const [sortBy, setSortBy] = React.useState('date');
+        const [sortDir, setSortDir] = React.useState('asc');
+        const [page, setPage] = React.useState(1);
+        const [selectedFileName, setSelectedFileName] = React.useState("");
+        const [showDedicated, setShowDedicated] = React.useState(true);
+        const [showMarket, setShowMarket] = React.useState(true);
+        
+        // Drop zone styling variables
+        const dropZoneAccent = '#ff9d18';
+        const dropZoneBg = 'rgba(255,157,24,0.05)';
+        
+        // Constants
+        const rowsPerPage = 10;
+        
+        // Theme effect
+        React.useEffect(() => {
+          const savedTheme = localStorage.getItem('theme') || 'light';
+          setTheme(savedTheme);
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }, []);
+        
+        React.useEffect(() => {
+          document.documentElement.setAttribute('data-theme', theme);
+          localStorage.setItem('theme', theme);
+        }, [theme]);
+        
+        // Derived state
+        const allDates = React.useMemo(() => {
+          if (!Array.isArray(data) || data.length === 0) return [];
+          
+          const dates = data
+            .filter(row => row && typeof row === 'object' && row["Start Time"])
+            .map(row => excelDateToYMD(row["Start Time"]))
+            .filter(date => date && date.length > 0);
+          
+          return Array.from(new Set(dates)).sort();
+        }, [data]);
+        
+        // Update dateRange when allDates changes
+        React.useEffect(() => {
+          setDateRange(prev => {
+            if (!allDates.includes(prev.start) || !allDates.includes(prev.end)) {
+              return {
+                start: allDates[0] || '',
+                end: allDates[allDates.length - 1] || ''
+              };
+            }
+            return prev;
+          });
+        }, [allDates]);
+        
+        // Filtered data
+        const filteredData = React.useMemo(() => {
+          if (!Array.isArray(data) || data.length === 0) return [];
+          
+          return data.filter(row => {
+            if (!row || typeof row !== 'object') return false;
+            
+            const startTime = row["Start Time"];
+            const vehicleType = row["Vehicle Type"];
+            
+            if (!startTime || !vehicleType) return false;
+            
+            const date = excelDateToYMD(startTime);
+            if (!date) return false;
+            
+            const vt = vehicleType;
+            const inDate = (!dateRange.start || date >= dateRange.start) && (!dateRange.end || date <= dateRange.end);
+            const inType = vehicleType === 'ALL' || vt === vehicleType;
+            return inDate && inType;
+          });
+        }, [data, dateRange, vehicleType]);
+        
+        // Chart data aggregation
+        const aggByDate = React.useMemo(() => aggregateByDate(filteredData), [filteredData]);
+        const chartDates = React.useMemo(() => Object.keys(aggByDate).sort(), [aggByDate]);
+        
+        // Grouped data for KPIs
+        const grouped = React.useMemo(() => groupByDateAndType(filteredData), [filteredData]);
+        const kpiRows = React.useMemo(() => calcKPIs(grouped), [grouped]);
+        const volumeAlloc = React.useMemo(() => calcVolumeAllocation(grouped), [grouped]);
+        
+        // Chart data
+        const shipmentsBarData = React.useMemo(() => ({
+          labels: chartDates,
+          datasets: [
+            showDedicated && {
+              label: 'DEDICATED',
+              data: chartDates.map(date => {
+                if (!aggByDate[date] || !aggByDate[date].DEDICATED || typeof aggByDate[date].DEDICATED.shipments !== 'number') {
+                  return 0;
+                }
+                return aggByDate[date].DEDICATED.shipments;
+              }),
+              backgroundColor: '#2e9e6e',
+              stack: 'shipments',
+              borderRadius: 8,
+            },
+            showMarket && {
+              label: 'MARKET',
+              data: chartDates.map(date => {
+                if (!aggByDate[date] || !aggByDate[date].MARKET || typeof aggByDate[date].MARKET.shipments !== 'number') {
+                  return 0;
+                }
+                return aggByDate[date].MARKET.shipments;
+              }),
+              backgroundColor: '#ff9d18',
+              stack: 'shipments',
+              borderRadius: 8,
+            },
+          ].filter(Boolean),
+        }), [chartDates, aggByDate, showDedicated, showMarket]);
+        
+        const sdrLineData = React.useMemo(() => ({
+          label: 'SDR%',
+          data: chartDates.map(date => {
+            if (!aggByDate[date] || typeof aggByDate[date].SDR !== 'number') {
+              return 0;
+            }
+            return aggByDate[date].SDR;
+          }),
+          type: 'line',
+          borderColor: '#ffd700',
+          backgroundColor: '#ffd700',
+          yAxisID: 'y1',
+          fill: false,
+          tension: 0.5,
+          pointRadius: 3,
+          order: 2,
+          borderWidth: 3,
+        }), [chartDates, aggByDate]);
+        
+        const volUtilLineData = React.useMemo(() => [
+          showDedicated && {
+            label: 'DEDICATED',
+            data: chartDates.map(date => {
+              if (!aggByDate[date] || !aggByDate[date].DEDICATED || !Array.isArray(aggByDate[date].DEDICATED.volUtil)) {
+                return 0;
+              }
+              const arr = aggByDate[date].DEDICATED.volUtil;
+              const avg = arr.length ? arr.reduce(function(a, b) { return a + b; }, 0) / arr.length : 0;
+              return capUtil(avg);
+            }),
+            borderColor: '#2e9e6e',
+            backgroundColor: 'rgba(31,106,74,0.1)',
+            tension: 0.5,
+            fill: false,
+            pointRadius: 3,
+            borderWidth: 3,
+          },
+          showMarket && {
+            label: 'MARKET',
+            data: chartDates.map(date => {
+              if (!aggByDate[date] || !aggByDate[date].MARKET || !Array.isArray(aggByDate[date].MARKET.volUtil)) {
+                return 0;
+              }
+              const arr = aggByDate[date].MARKET.volUtil;
+              const avg = arr.length ? arr.reduce(function(a, b) { return a + b; }, 0) / arr.length : 0;
+              return capUtil(avg);
+            }),
+            borderColor: '#ff9d18',
+            backgroundColor: 'rgba(255,157,24,0.1)',
+            tension: 0.5,
+            fill: false,
+            pointRadius: 3,
+            borderWidth: 3,
+          },
+        ].filter(Boolean), [chartDates, aggByDate, showDedicated, showMarket]);
+        
+        // Table sorting and pagination
+        const sortedRows = React.useMemo(() => {
+          const sorted = [...kpiRows].sort((a, b) => {
+            let vA = a[sortBy], vB = b[sortBy];
+            if (typeof vA === 'string') vA = vA.toLowerCase();
+            if (typeof vB === 'string') vB = vB.toLowerCase();
+            if (vA < vB) return sortDir === 'asc' ? -1 : 1;
+            if (vA > vB) return sortDir === 'asc' ? 1 : -1;
+            return 0;
+          });
+          return sorted;
+        }, [kpiRows, sortBy, sortDir]);
+        
+        const pagedRows = React.useMemo(() => {
+          const start = (page - 1) * rowsPerPage;
+          return sortedRows.slice(start, start + rowsPerPage);
+        }, [sortedRows, page]);
+        
+        // ALL HOOKS MUST BE CALLED BEFORE ANY EARLY RETURNS
+        if (loading) {
+          return (
+            <div className="spinner" style={{ marginTop: '10rem' }} aria-label="Loading"></div>
+          );
+        }
+        
+        // Event handlers - using regular functions to avoid useCallback complexity
+        function handleSort(col) {
+          if (sortBy === col) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
+          else { setSortBy(col); setSortDir('asc'); }
+          setPage(1);
+        }
+        
+        function handleExportCSV() {
+          exportToCSV(sortedRows, 'ofd_kpi_dashboard.csv');
+        }
+        
+        function handleExportExcel() {
+          exportToExcel(sortedRows, 'ofd_kpi_dashboard.xlsx');
+        }
+        
+        function toggleTheme() {
+          setTheme(t => t === 'light' ? 'dark' : 'light');
+        }
+        
+        function showError(message) {
+          alert('Upload Error: ' + message);
+          setSelectedFileName("");
+        }
+        
+        function validateAndSetData(json) {
+          if (!Array.isArray(json)) {
+            showError('Uploaded file must contain an array of data');
+            return;
+          }
+          
+          if (json.length === 0) {
+            showError('Uploaded file contains no data rows');
+            return;
+          }
+          
+          // Check for required columns
+          const requiredColumns = ['Start Time', 'Vehicle Type', 'Total Consignment', 'Total Delivery Consignment'];
+          const firstRow = json[0];
+          const missingColumns = requiredColumns.filter(col => !(col in firstRow));
+          
+          if (missingColumns.length > 0) {
+            showError('Missing required columns: ' + missingColumns.join(', '));
+            return;
+          }
+          
+          // Validate data types and clean data
+          const cleanedData = json.map((row, index) => {
+            const cleaned = {};
+            for (const key in row) {
+              if (row.hasOwnProperty(key)) {
+                let value = row[key];
+                
+                // Convert numeric strings to numbers for specific fields
+                if (['Total Consignment', 'Total Delivery Consignment', 'Vehicle Volume Utilisation (%)', 'Vehicle Weight Utilisation (%)', 'Total weight (Kg)', 'Total volume (Cubic Feet)'].includes(key)) {
+                  value = parseFloat(value) || 0;
+                }
+                
+                // Ensure Start Time is a number
+                if (key === 'Start Time') {
+                  value = parseFloat(value) || 0;
+                }
+                
+                cleaned[key] = value;
+              }
+            }
+            return cleaned;
+          });
+          
+          setData(cleanedData);
+        }
+        
+        function handleDateChange(e) {
+          const { name, value } = e.target;
+          setDateRange(prev => ({ ...prev, [name]: value }));
+          setPage(1);
+        }
+        
+        function handleVehicleTypeChange(e) {
+          setVehicleType(e.target.value);
+          setPage(1);
+        }
+        
+        function handleDrag(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (e.type === 'dragenter' || e.type === 'dragover') {
+            // setDragActive(true);
+          } else if (e.type === 'dragleave') {
+            // setDragActive(false);
+          }
+        }
+        
+        function handleDrop(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          // setDragActive(false);
+          if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            handleFile({ target: { files: e.dataTransfer.files } });
+          }
+        }
+        
+        function handleFile(e) {
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            setSelectedFileName(file.name);
+            setLoading(true);
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+              try {
+                let json = [];
+                const text = evt.target.result;
+                
+                if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+                  const data = new Uint8Array(evt.target.result);
+                  const workbook = window.XLSX.read(data, { type: 'array' });
+                  const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                  json = window.XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+                } else {
+                  try {
+                    json = JSON.parse(text);
+                  } catch (e) {
+                    // Try parsing as CSV
+                    Papa.parse(text, {
+                      header: true,
+                      skipEmptyLines: true,
+                      complete: (results) => {
+                        validateAndSetData(results.data);
+                        setLoading(false);
+                      },
+                      error: (error) => {
+                        showError('Failed to parse CSV file: ' + error.message);
+                        setLoading(false);
+                      }
+                    });
+                    return;
+                  }
+                }
+                
+                validateAndSetData(json);
+                setLoading(false);
+              } catch (error) {
+                showError('Failed to process file: ' + error.message);
+                setLoading(false);
+              }
+            };
+            
+            reader.onerror = () => {
+              showError('Failed to read file');
+              setLoading(false);
+            };
+            
+            if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+              reader.readAsArrayBuffer(file);
+            } else {
+              reader.readAsText(file);
+            }
+          } else {
+            setSelectedFileName("");
+          }
+        }
+
+          // Main render
+          return (
+            <div className="app-grid" data-theme={theme}>
+              {/* Sidebar as Filters */}
+              <aside className="sidebar" aria-label="Filters Sidebar">
+                <div className="sidebar-filters-header">Filters</div>
+                <form className="filters-form" style={{ display: 'flex', flexDirection: 'column', gap: '2.2rem' }} onSubmit={e => e.preventDefault()}>
+                  {/* Date Range */}
+                  <div className="filters-row" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
+                    <div style={{ flex: 1 }}>
+                      <label htmlFor="start-date" className="filters-label">Start Date</label>
+                      <input id="start-date" type="date" name="start" value={dateRange.start} min={allDates[0]} max={dateRange.end || allDates[allDates.length - 1]} onChange={handleDateChange} className="filters-input" />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <label htmlFor="end-date" className="filters-label">End Date</label>
+                      <input id="end-date" type="date" name="end" value={dateRange.end} min={dateRange.start || allDates[0]} max={allDates[allDates.length - 1]} onChange={handleDateChange} className="filters-input" />
+                    </div>
+                  </div>
+                  {/* Vehicle Type */}
+                  <div className="filters-row" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <label htmlFor="vehicle-type" className="filters-label">Vehicle Type</label>
+                    <select id="vehicle-type" value={vehicleType} onChange={handleVehicleTypeChange} className="filters-input">
+                      <option value="ALL">All</option>
+                      <option value="DEDICATED">DEDICATED (Own Fleet/M&V)</option>
+                      <option value="MARKET">MARKET (PPS)</option>
+                    </select>
+                  </div>
+                  {/* Fleet on Hand fields hidden for now */}
+                  {/* File Upload */}
+                  <div style={{ width: '100%' }}>
+                    <div
+                      className="filters-row"
+                      style={{ flexDirection: 'column', gap: '0.5rem', position: 'relative' }}
+                      onDragEnter={handleDrag}
+                      onDragOver={handleDrag}
+                      onDragLeave={handleDrag}
+                      onDrop={handleDrop}
+                    >
+                      <input
+                        id="file-upload"
+                        type="file"
+                        accept=".csv,.json,.xlsx,.xls"
+                        onChange={handleFile}
+                        aria-label="Upload OFD Data"
+                        className="filters-input-file"
+                        style={{ display: 'none' }}
+                      />
+                      <div
+                        className="flex flex-col items-center justify-center"
+                        style={{
+                          border: '2.5px dashed ' + dropZoneAccent,
+                          background: dropZoneBg,
+                          borderRadius: '8px',
+                          padding: '4rem 1.5rem',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s, border 0.2s',
+                          minHeight: '240px',
+                          position: 'relative',
+                          width: '100%',
+                          textAlign: 'center',
+                        }}
+                        onClick={() => document.getElementById('file-upload').click()}
+                      >
+                        <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke={dropZoneAccent} strokeWidth="2" style={{ marginBottom: '0.5rem' }}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 19V6m0 0l-4 4m4-4l4 4" />
+                        </svg>
+                        <div style={{ color: dropZoneAccent, fontWeight: 600, fontSize: '1.1rem', marginBottom: '0.2rem' }}>
+                          Drop a file here to upload, or
+                        </div>
+                        <span style={{ color: dropZoneAccent, textDecoration: 'underline', cursor: 'pointer', fontWeight: 600 }}>
+                          click here to browse
+                        </span>
+                      </div>
+                      {selectedFileName && (
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            background: dropZoneAccent,
+                            color: '#fff',
+                            borderRadius: '999px',
+                            padding: '1.2rem 1.2rem 1.2rem 1.1rem',
+                            fontWeight: 700,
+                            fontSize: '1.15rem',
+                            marginTop: '1.2rem',
+                            boxShadow: '0 2px 8px 0 rgba(255,157,24,0.12)',
+                            width: '100%',
+                            minWidth: 0,
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            gap: '1rem',
+                            minHeight: '56px',
+                          }}
+                          title={selectedFileName}
+                          tabIndex={0}
+                          aria-label={`Uploaded file: ${selectedFileName}`}
+                        >
+                          {/* File icon */}
+                          <svg width="26" height="26" fill="none" viewBox="0 0 24 24" style={{marginRight: '0.7rem', flexShrink: 0}} aria-hidden="true">
+                            {/* File/document icon with folded corner */}
+                            <rect x="4" y="3" width="14" height="18" rx="2.5" fill="#fff" fillOpacity="0.18"/>
+                            <path d="M18 7V5.5A2.5 2.5 0 0 0 15.5 3H6.5A2.5 2.5 0 0 0 4 5.5v13A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V8.5A1.5 1.5 0 0 0 18 7z" stroke="#fff" strokeWidth="1.5" fill="none"/>
+                            <polyline points="18 7 18 3 14 3" stroke="#fff" strokeWidth="1.5" fill="none"/>
+                            <polygon points="18,7 14,3 18,3" fill="#fff" fillOpacity="0.28"/>
+                          </svg>
+                          {/* File name, bold, fills all space */}
+                          <span style={{overflow: 'hidden', textOverflow: 'ellipsis', flexGrow: 1, minWidth: 0, fontWeight: 800, fontSize: '1.15rem', letterSpacing: '0.01em'}}>{selectedFileName}</span>
+                          {/* Remove button, always at right, with hover effect */}
+                          <button
+                            type="button"
+                            aria-label="Remove uploaded file"
+                            onClick={() => { setSelectedFileName(""); setData(SAMPLE_DATA); }}
+                            style={{
+                              background: 'rgba(0,0,0,0.18)',
+                              border: 'none',
+                              color: '#fff',
+                              borderRadius: '50%',
+                              width: 32,
+                              height: 32,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer',
+                              marginLeft: 12,
+                              fontSize: 22,
+                              outline: 'none',
+                              transition: 'background 0.18s',
+                            }}
+                            tabIndex={0}
+                            onMouseOver={e => e.currentTarget.style.background = '#e58400'}
+                            onMouseOut={e => e.currentTarget.style.background = 'rgba(0,0,0,0.18)'}
+                            onFocus={e => e.currentTarget.style.background = '#e58400'}
+                            onBlur={e => e.currentTarget.style.background = 'rgba(0,0,0,0.18)'}
+                            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setSelectedFileName(""); setData(SAMPLE_DATA); } }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {/* Buttons */}
+                  <div className="filters-row" style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                    <button type="button" className="btn-primary" onClick={() => setData(SAMPLE_DATA)} style={{ minWidth: 140 }}>Reset to Sample Data</button>
+                    <button type="button" className="btn-secondary" onClick={() => {
+                      setDateRange({ start: '', end: '' });
+                      setVehicleType('ALL');
+                    }} style={{ minWidth: 120 }}>Clear Filters</button>
+                  </div>
+                </form>
+              </aside>
+              {/* Main content */}
+              <main className="main-content">
+                {/* Navbar */}
+                <header className="navbar" role="banner">
+                  <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '1px' }}>OFD KPI Dashboard</span>
+                </header>
+                <section className="dashboard-section" role="main">
+                  <div className="gradient-header">{generateDynamicTitle(filteredData, dateRange, vehicleType)}</div>
+                  {/* KPI Cards */}
+                  <div className="kpi-cards">
+                    <div className="kpi-card" tabIndex={0}>
+                      <div className="kpi-label">Total Shipments</div>
+                      <div className="kpi-value">{kpiRows.reduce((a, b) => a + b.totalConsignment, 0)}</div>
+                      <div className="kpi-desc">All filtered days</div>
+                    </div>
+                    <div className="kpi-card" tabIndex={0}>
+                      <div className="kpi-label">Total Trips</div>
+                      <div className="kpi-value">{kpiRows.reduce((a, b) => a + b.trips, 0)}</div>
+                      <div className="kpi-desc">All filtered days</div>
+                    </div>
+                    <div className="kpi-card" tabIndex={0}>
+                      <div className="kpi-label">Avg SDR%</div>
+                      <div className="kpi-value">{(kpiRows.reduce((a, b) => a + b.sdr, 0) / (kpiRows.length || 1)).toFixed(1)}%</div>
+                      <div className="kpi-desc">Successful Delivery Rate</div>
+                    </div>
+                    <div className="kpi-card" tabIndex={0}>
+                      <div className="kpi-label">Avg Vol Util (%)</div>
+                      <div className="kpi-value">{(kpiRows.reduce((a, b) => a + b.avgVolUtil, 0) / (kpiRows.length || 1)).toFixed(1)}%</div>
+                      <div className="kpi-desc">Vehicle Volume Utilization</div>
+                    </div>
+                  </div>
+                  {/* Charts */}
+                  <div className="dashboard-grid">
+                    <div style={{ gridColumn: 'span 6' }}>
+                      <div className="card">
+                        <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Shipments & SDR% by Vehicle Type & Date</div>
+                        <BarChartJS
+                          data={{
+                            ...shipmentsBarData,
+                            datasets: [...shipmentsBarData.datasets, sdrLineData],
+                          }}
+                          options={{
+                            responsive: true,
+                            interaction: { mode: 'index', intersect: false },
+                            plugins: {
+                              legend: {
+                                labels: {
+                                  color: '#fff',
+                                  font: { family: 'Euclid Circular B', size: 18, weight: 'bold' },
+                                  boxWidth: 32,
+                                  boxHeight: 18,
+                                  padding: 24
+                                }
+                              },
+                              tooltip: {
+                                enabled: true,
+                                backgroundColor: '#184c36',
+                                borderColor: '#ff9d18',
+                                borderWidth: 2,
+                                titleColor: '#ff9d18',
+                                bodyColor: '#fff',
+                                titleFont: { family: 'Euclid Circular B', size: 18, weight: 'bold' },
+                                bodyFont: { family: 'Euclid Circular B', size: 16, weight: 'bold' },
+                                padding: 16,
+                                caretSize: 8,
+                                cornerRadius: 12,
+                                boxPadding: 8,
+                                boxHeight: 18,
+                                boxWidth: 18,
+                                displayColors: true,
+                                boxShadow: '0 4px 24px 0 rgba(255,157,24,0.18)',
+                                callbacks: {
+                                  label: function(context) {
+                                    // Custom color for each dataset
+                                    var color = '#fff';
+                                    if (context.dataset.label === 'DEDICATED') color = '#2e9e6e';
+                                    if (context.dataset.label === 'MARKET') color = '#ff9d18';
+                                    if (context.dataset.label === 'SDR%') color = '#ffd700';
+                                    return (
+                                      ' ' + context.dataset.label + ': ' + context.formattedValue
+                                    );
+                                  },
+                                  labelTextColor: function(context) {
+                                    if (context.dataset.label === 'DEDICATED') return '#2e9e6e';
+                                    if (context.dataset.label === 'MARKET') return '#ff9d18';
+                                    if (context.dataset.label === 'SDR%') return '#ffd700';
+                                    return '#fff';
+                                  }
+                                }
+                              },
+                              datalabels: { color: 'var(--white)', font: { weight: 'bold' }, anchor: 'end', align: 'top', display: ctx => ctx.dataset.type !== 'line' }
+                            },
+                            scales: {
+                              y: { beginAtZero: true, title: { display: true, text: 'Shipments', color: '#fff', font: { size: 16 } }, ticks: { color: '#fff', font: { size: 14 } } },
+                              y1: {
+                                beginAtZero: true,
+                                position: 'right',
+                                title: { display: true, text: 'SDR%', color: '#fff', font: { size: 16 } },
+                                grid: { drawOnChartArea: false },
+                                ticks: { color: '#fff', font: { size: 14 } }
+                              },
+                              x: { ticks: { color: '#fff', font: { size: 14 } }, grid: { color: 'rgba(255,255,255,0.10)' } }
+                            },
+                            animation: { duration: 900, easing: 'easeOutQuart' },
+                            layout: { padding: 24 }
+                          }}
+                          height={300}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ gridColumn: 'span 6' }}>
+                      <div className="card">
+                        <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Avg Volume Utilization (%) Over Time</div>
+                        <LineChartJS
+                          data={{
+                            labels: chartDates,
+                            datasets: volUtilLineData,
+                          }}
+                          options={{
+                            responsive: true,
+                            plugins: {
+                              legend: {
+                                labels: {
+                                  color: '#fff',
+                                  font: { family: 'Euclid Circular B', size: 18, weight: 'bold' },
+                                  boxWidth: 32,
+                                  boxHeight: 18,
+                                  padding: 24
+                                }
+                              },
+                              tooltip: {
+                                enabled: true,
+                                backgroundColor: '#184c36',
+                                borderColor: '#ff9d18',
+                                borderWidth: 2,
+                                titleColor: '#ff9d18',
+                                bodyColor: '#fff',
+                                titleFont: { family: 'Euclid Circular B', size: 18, weight: 'bold' },
+                                bodyFont: { family: 'Euclid Circular B', size: 16, weight: 'bold' },
+                                padding: 16,
+                                caretSize: 8,
+                                cornerRadius: 12,
+                                boxPadding: 8,
+                                boxHeight: 18,
+                                boxWidth: 18,
+                                displayColors: true,
+                                boxShadow: '0 4px 24px 0 rgba(255,157,24,0.18)',
+                                callbacks: {
+                                  label: function(context) {
+                                    var color = '#fff';
+                                    if (context.dataset.label === 'DEDICATED') color = '#2e9e6e';
+                                    if (context.dataset.label === 'MARKET') color = '#ff9d18';
+                                    return (
+                                      ' ' + context.dataset.label + ': ' + context.formattedValue
+                                    );
+                                  },
+                                  labelTextColor: function(context) {
+                                    if (context.dataset.label === 'DEDICATED') return '#2e9e6e';
+                                    if (context.dataset.label === 'MARKET') return '#ff9d18';
+                                    return '#fff';
+                                  }
+                                }
+                              },
+                              datalabels: { color: 'var(--white)', font: { weight: 'bold' }, anchor: 'end', align: 'top', display: ctx => ctx.dataset.type !== 'line' }
+                            },
+                            scales: {
+                              y: { beginAtZero: true, title: { display: true, text: 'Avg Vol Util (%)' }, max: 100 },
+                              x: { ticks: { color: '#fff', font: { size: 14 } }, grid: { color: 'rgba(255,255,255,0.10)' } }
+                            },
+                            animation: { duration: 900, easing: 'easeOutQuart' },
+                            layout: { padding: 24 }
+                          }}
+                          height={300}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* Table */}
+                  <div className="card table-container" role="table" aria-label="KPI Table">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                      <span style={{ fontWeight: 600 }}>KPIs by Date & Vehicle Type</span>
+                      <span>
+                        <button className="export-btn" onClick={handleExportCSV} aria-label="Export CSV">Export CSV</button>
+                        <button className="export-btn" onClick={handleExportExcel} aria-label="Export Excel">Export Excel</button>
+                      </span>
+                    </div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th onClick={() => handleSort('date')}>Date {sortBy === 'date' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('vehicleType')}>Vehicle Type {sortBy === 'vehicleType' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('totalConsignment')}>Shipments {sortBy === 'totalConsignment' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('totalDelivered')}>Delivered {sortBy === 'totalDelivered' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('sdr')}>SDR% {sortBy === 'sdr' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('trips')}>Trips {sortBy === 'trips' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('uniqueVehicles')}>Unique Vehicles {sortBy === 'uniqueVehicles' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                          <th onClick={() => handleSort('avgVolUtil')}>Avg Vol Util (%) {sortBy === 'avgVolUtil' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pagedRows.map((row, i) => (
+                          <tr key={i} tabIndex={0}>
+                            <td>{row.date}</td>
+                            <td>{row.vehicleType}</td>
+                            <td>{row.totalConsignment}</td>
+                            <td>{row.totalDelivered}</td>
+                            <td>{row.sdr.toFixed(1)}%</td>
+                            <td>{row.trips}</td>
+                            <td>{row.uniqueVehicles}</td>
+                            <td>{row.avgVolUtil.toFixed(1)}%</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    {/* Pagination */}
+                    <div className="pagination">
+                      <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} aria-label="Previous page">Prev</button>
+                      <span>Page {page} of {Math.ceil(sortedRows.length / rowsPerPage)}</span>
+                      <button onClick={() => setPage(p => Math.min(Math.ceil(sortedRows.length / rowsPerPage), p + 1))} disabled={page === Math.ceil(sortedRows.length / rowsPerPage)} aria-label="Next page">Next</button>
+                    </div>
+                  </div>
+                </section>
+              </main>
+            </div>
+          );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+      </script>
+    </body>
+  </html> 
