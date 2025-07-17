@@ -17,10 +17,10 @@
     // Global Chart.js configuration to ensure all text is green
     document.addEventListener('DOMContentLoaded', function () {
       if (typeof window.Chart !== 'undefined') {
-        window.Chart.defaults.color = '#1f6a4a';
-        window.Chart.defaults.plugins.legend.labels.color = '#1f6a4a';
-        window.Chart.defaults.scales.category.ticks.color = '#1f6a4a';
-        window.Chart.defaults.scales.linear.ticks.color = '#1f6a4a';
+        window.Chart.defaults.color = '#1fb14a';
+        window.Chart.defaults.plugins.legend.labels.color = '#1fb14a';
+        window.Chart.defaults.scales.category.ticks.color = '#1fb14a';
+        window.Chart.defaults.scales.linear.ticks.color = '#1fb14a';
       }
     });
   </script>
@@ -99,6 +99,7 @@
       --primarySurface: #184c36;
       --primaryBorder: #295c47;
       --primaryFocus: #184c36;
+      --primaryMainLight: #8ebfaa; 
       --secondaryMain: #ff9d18;
       --secondaryHover: #e58400;
       --secondarySurface: #2a3c33;
@@ -200,7 +201,7 @@
       font-size: 1.3rem;
       margin-bottom: 2rem;
       letter-spacing: 1px;
-      color: var(--secondaryMain);
+      color: var(--primaryMain);
     }
 
     .sidebar nav {
@@ -228,13 +229,13 @@
     .sidebar nav a.active,
     .sidebar nav button:hover,
     .sidebar nav a:hover {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
     }
 
     .sidebar .sidebar-toggle {
       margin-top: 2rem;
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
       border: none;
       border-radius: 0.5rem;
@@ -245,7 +246,7 @@
     }
 
     .sidebar .sidebar-toggle:hover {
-      background: var(--secondaryHover);
+      background: var(--primaryMain);
     }
 
     .navbar {
@@ -253,7 +254,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--white);
       box-shadow: 0 2px 12px 0 rgba(31, 106, 74, 0.08);
       position: sticky;
@@ -262,9 +263,9 @@
     }
 
     .navbar .theme-toggle {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
-      border: 2px solid var(--secondaryMain);
+      border: 2px solid var(--primaryMain);
       border-radius: 0.5rem;
       padding: 0.5rem 1rem;
       cursor: pointer;
@@ -273,7 +274,7 @@
     }
 
     .navbar .theme-toggle:hover {
-      background: var(--secondaryHover);
+      background: var(--primaryMain);
       color: var(--white);
     }
 
@@ -297,7 +298,7 @@
       margin-bottom: 1.5rem;
       transition: box-shadow 0.3s, transform 0.3s;
       color: var(--text);
-      border: 2px solid var(--secondaryMain);
+      border: 2px solid var(--primaryMain);
     }
 
     .card:hover {
@@ -428,14 +429,14 @@
       border-radius: 0.5rem;
       overflow: hidden;
       box-shadow: 0 4px 12px 0 rgba(31, 106, 74, 0.15);
-      border: 2px solid var(--secondaryMain);
+      border: 2px solid var(--primaryMain);
     }
 
     th,
     td {
       padding: 1rem 0.75rem;
       text-align: left;
-      border-bottom: 2px solid var(--secondaryMain);
+      border-bottom: 2px solid var(--primaryMain);
       font-weight: 600;
     }
 
@@ -462,7 +463,7 @@
 
     tr[tabindex='0']:focus,
     tr:hover {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
     }
 
@@ -475,7 +476,7 @@
     }
 
     .pagination button {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
       border: none;
       border-radius: 0.4rem;
@@ -492,7 +493,7 @@
     }
 
     .pagination-btn {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
       border: none;
       border-radius: 0.4rem;
@@ -504,7 +505,7 @@
     }
 
     .pagination-btn:hover:not(:disabled) {
-      background: var(--secondaryHover);
+      background: var(--primaryMain);
       color: var(--white);
     }
 
@@ -521,9 +522,9 @@
     }
 
     .export-btn {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
-      border: 1.5px solid var(--secondaryMain);
+      border: 1.5px solid var(--primaryMain);
       border-radius: 0.4rem;
       padding: 0.4rem 1rem;
       cursor: pointer;
@@ -533,13 +534,13 @@
     }
 
     .export-btn:hover {
-      background: var(--secondaryHover);
+      background: var(--primaryMain);
       color: var(--white);
     }
 
     .spinner {
       border: 4px solid var(--primarySurface);
-      border-top: 4px solid var(--secondaryMain);
+      border-top: 4px solid var(--primaryMain);
       border-radius: 50%;
       width: 32px;
       height: 32px;
@@ -558,7 +559,7 @@
     }
 
     .gradient-header {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
       padding: 1.5rem 2rem;
       border-radius: 1rem 1rem 0 0;
@@ -582,7 +583,7 @@
       color: var(--text);
       border-radius: 0.75rem;
       box-shadow: 0 6px 25px 0 rgba(31, 106, 74, 0.20);
-      border: 3px solid var(--secondaryMain);
+      border: 3px solid var(--primaryMain);
       padding: 1.2rem 1rem;
       display: flex;
       flex-direction: column;
@@ -593,9 +594,9 @@
 
     .kpi-card:hover {
       box-shadow: 0 8px 32px 0 rgba(255, 157, 24, 0.18);
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
-      border-color: var(--secondaryHover);
+      border-color: var(--primaryMain);
       transform: translateY(-2px);
     }
 
@@ -617,7 +618,7 @@
 
     .kpi-desc {
       font-size: 0.95rem;
-      color: var(--secondaryMain);
+      color: var(--primaryMain);
       font-weight: 600;
     }
 
@@ -629,7 +630,7 @@
     }
 
     .date-picker input[type='date'] {
-      border: 1px solid var(--secondaryMain);
+      border: 1px solid var(--primaryMain);
       border-radius: 0.4rem;
       padding: 0.4rem 0.7rem;
       font-size: 1rem;
@@ -639,7 +640,7 @@
     }
 
     .date-picker input[type='date']:focus {
-      border: 1.5px solid var(--secondaryMain);
+      border: 1.5px solid var(--primaryMain);
       outline: none;
     }
 
@@ -652,7 +653,7 @@
 
     .vehicle-mapping select,
     .vehicle-mapping input {
-      border: 1px solid var(--secondaryMain);
+      border: 1px solid var(--primaryMain);
       border-radius: 0.4rem;
       padding: 0.4rem 0.7rem;
       font-size: 1rem;
@@ -663,7 +664,7 @@
 
     .vehicle-mapping select:focus,
     .vehicle-mapping input:focus {
-      border: 1.5px solid var(--secondaryMain);
+      border: 1.5px solid var(--primaryMain);
       outline: none;
     }
 
@@ -689,7 +690,7 @@
     /* Modern Filters Section Styles */
     .filters-modern {
       background: var(--primaryFocus);
-      border: 1.5px solid var(--secondaryMain);
+      border: 1.5px solid var(--primaryMain);
       border-radius: 1.2rem;
       box-shadow: 0 2px 12px 0 rgba(255, 157, 24, 0.10);
     }
@@ -734,7 +735,7 @@
       width: 100%;
       padding: 0.65rem 1rem;
       border-radius: 0.7rem;
-      border: 2px solid var(--secondaryMain);
+      border: 2px solid var(--primaryMain);
       background: var(--neutral);
       color: var(--text);
       font-size: 1.08rem;
@@ -744,7 +745,7 @@
     }
 
     .filters-input:focus {
-      border-color: var(--secondaryHover);
+      border-color: var(--primaryMain);
       box-shadow: 0 0 0 2px rgba(229, 132, 0, 0.2);
     }
 
@@ -758,7 +759,7 @@
       width: 100%;
       padding: 0.65rem 1rem;
       border-radius: 0.7rem;
-      border: 2px solid var(--secondaryMain);
+      border: 2px solid var(--primaryMain);
       background: var(--neutral);
       color: var(--textSecondary);
       font-size: 1.08rem;
@@ -773,7 +774,7 @@
     .filters-file-label:focus {
       background: var(--primarySurface);
       color: var(--white);
-      border-color: var(--secondaryHover);
+      border-color: var(--primaryMain);
     }
 
     .filters-file-name {
@@ -802,7 +803,7 @@
     }
 
     .btn-primary {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
       border: none;
       padding: 0.7rem 1.3rem;
@@ -812,23 +813,23 @@
 
     .btn-primary:hover,
     .btn-primary:focus {
-      background: var(--secondaryHover);
+      background: var(--primaryMain);
       color: var(--white);
     }
 
     .btn-secondary {
       background: var(--primarySurface);
       color: var(--textSecondary);
-      border: 2px solid var(--secondaryMain);
+      border: 2px solid var(--primaryMain);
       padding: 0.7rem 1.3rem;
       transition: background 0.2s, color 0.2s, border 0.2s;
     }
 
     .btn-secondary:hover,
     .btn-secondary:focus {
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
       color: var(--neutral);
-      border-color: var(--secondaryHover);
+      border-color: var(--primaryMain);
     }
 
     @media (min-width: 400px) {
@@ -847,7 +848,7 @@
       font-size: 1.5rem;
       margin-bottom: 2.2rem;
       letter-spacing: 1px;
-      color: var(--secondaryMain);
+      color: var(--primaryMain);
     }
 
     @media (max-width: 900px) {
@@ -894,15 +895,15 @@
     }
 
     .tab-btn:hover {
-      background: rgba(255, 157, 24, 0.10);
-      color: var(--secondaryMain);
-    }
+  background: var(--primaryMainLight);
+  color: var(--primaryMain);
+}
 
     .tab-btn.selected {
-      background: rgba(255, 157, 24, 0.18);
-      color: var(--secondaryMain);
-      box-shadow: 0 2px 8px 0 rgba(255, 157, 24, 0.08);
-    }
+  background: var(--primaryMainLight); /* new greenish background */
+  color: var(--primaryMain);
+  box-shadow: 0 2px 8px 0 rgba(31, 106, 74, 0.08); /* optional: greenish shadow */
+}
 
     .tab-btn.selected::before {
       content: '';
@@ -912,7 +913,7 @@
       bottom: 0.5rem;
       width: 5px;
       border-radius: 4px;
-      background: var(--secondaryMain);
+      background: var(--primaryMain);
     }
 
     #filtersModal.hidden {
@@ -949,7 +950,7 @@
       min-width: 1.25em;
       margin-right: 0.75em;
       text-align: center;
-      color: var(--secondaryMain);
+      color: var(--primaryMain);
       opacity: 0.85;
       font-size: 1.15em;
     }
@@ -990,7 +991,7 @@
 
 <body class="bg-[var(--lightBackground)] min-h-screen">
   <!-- NAVBAR WITH FILTER BUTTON AND HAMBURGER -->
-  <nav class="navbar flex items-center justify-between px-6 py-4 bg-[var(--secondaryMain)] w-full">
+  <nav class="navbar flex items-center justify-between px-6 py-4 bg-[var(--primaryMain)] w-full">
     <div class="flex items-center gap-4">
       <button id="sidebarToggle" class="md:hidden mr-2 text-2xl text-white">&#9776;</button>
       <span className="text-3xl font-bold text-white">Home Delivery KPIs</span>
@@ -1004,23 +1005,23 @@
   <div id="filtersModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
     <div class="bg-[var(--white)] rounded-lg p-6 w-full max-w-md relative">
       <button id="closeFiltersBtn" class="absolute top-2 right-2 text-xl">&times;</button>
-      <h2 className="text-xl font-bold mb-4 text-[var(--secondaryMain)]">Filters</h2>
+      <h2 className="text-xl font-bold mb-4 text-[var(--primaryMain)]">Filters</h2>
       <form class="filters-form flex flex-col gap-4">
         <div class="flex gap-4">
           <div class="flex flex-col w-1/2">
             <label class="font-semibold mb-1">Start Date</label>
             <input type="date"
-              class="rounded-md px-3 py-2 border border-[var(--secondaryMain)] bg-transparent text-white" />
+              class="rounded-md px-3 py-2 border border-[var(--primaryMain)] bg-transparent text-white" />
           </div>
           <div class="flex flex-col w-1/2">
             <label class="font-semibold mb-1">End Date</label>
             <input type="date"
-              class="rounded-md px-3 py-2 border border-[var(--secondaryMain)] bg-transparent text-white" />
+              class="rounded-md px-3 py-2 border border-[var(--primaryMain)] bg-transparent text-white" />
           </div>
         </div>
         <div class="flex flex-col">
           <label class="font-semibold mb-1">Vehicle Type</label>
-          <select class="rounded-md px-3 py-2 border border-[var(--secondaryMain)] bg-transparent text-white">
+          <select class="rounded-md px-3 py-2 border border-[var(--primaryMain)] bg-transparent text-white">
             <option>All</option>
             <!-- Add more options as needed -->
           </select>
@@ -1028,7 +1029,7 @@
         <div class="flex flex-col">
           <label class="font-semibold mb-1">Upload</label>
           <div
-            class="border-2 border-dashed border-[var(--secondaryMain)] rounded-md p-6 text-center text-[var(--secondaryMain)] cursor-pointer">
+            class="border-2 border-dashed border-[var(--primaryMain)] rounded-md p-6 text-center text-[var(--primaryMain)] cursor-pointer">
             Drop a file here to upload, or <a href="#" class="underline font-semibold">click here to browse</a>
           </div>
         </div>
@@ -1071,7 +1072,7 @@
       if (delivered !== null && target) {
         const rawVar = ((delivered - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -1196,7 +1197,7 @@
       if (volume !== null && target) {
         const rawVar = ((volume - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -1256,7 +1257,7 @@
       if (volume !== null && target) {
         const rawVar = ((volume - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -1397,9 +1398,9 @@
 
         // Get colors
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
-        const orangeFill = 'rgba(255,157,24,0.15)';
-        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1f6a4a';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
+        const orangeFill = 'rgba(2, 96, 24,0.15)';
+        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1fb14a';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
 
         // Create chart
@@ -1603,7 +1604,7 @@
 
         // Get colors
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
 
         // Create horizontal bar chart
@@ -1801,9 +1802,9 @@
 
         // Get colors
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
-        const orangeFill = 'rgba(255,157,24,0.15)';
-        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1f6a4a';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
+        const orangeFill = 'rgba(2, 96, 24,0.15)';
+        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1fb14a';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
 
         // Create chart
@@ -2007,7 +2008,7 @@
 
         // Get colors
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
 
         // Create horizontal bar chart
@@ -2122,7 +2123,7 @@
       if (volume !== null && target) {
         const rawVar = ((volume - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -2295,7 +2296,7 @@
       if (loading) {
         return (
           <div className="card">
-            <h3 className="text-xl font-bold mb-4 text-[var(--secondaryMain)]">Top 5 Customers by Volume</h3>
+            <h3 className="text-xl font-bold mb-4 text-[var(--primaryMain)]">Top 5 Customers by Volume</h3>
             <div className="flex justify-center items-center h-32">
               <div className="spinner"></div>
             </div>
@@ -2306,7 +2307,7 @@
       if (error) {
         return (
           <div className="card">
-            <h3 className="text-xl font-bold mb-4 text-[var(--secondaryMain)]">Top 5 Customers by Volume</h3>
+            <h3 className="text-xl font-bold mb-4 text-[var(--primaryMain)]">Top 5 Customers by Volume</h3>
             <div className="text-red-400 text-center p-4">
               {error}
             </div>
@@ -2317,7 +2318,7 @@
       if (customers.length === 0) {
         return (
           <div className="card">
-            <h3 className="text-xl font-bold mb-4 text-[var(--secondaryMain)]">Top 5 Customers by Volume</h3>
+            <h3 className="text-xl font-bold mb-4 text-[var(--primaryMain)]">Top 5 Customers by Volume</h3>
             <div className="text-[var(--textSecondary)] text-center p-8">
               Upload an Excel file to see top customers by volume
             </div>
@@ -2330,7 +2331,7 @@
 
       return (
         <div className="card">
-          <h3 className="text-xl font-bold mb-6 text-[var(--secondaryMain)]">Top 5 Customers by Volume</h3>
+          <h3 className="text-xl font-bold mb-6 text-[var(--primaryMain)]">Top 5 Customers by Volume</h3>
           <div className="space-y-4">
             {customers.map((customer, index) => {
               const barWidth = (customer.volume / maxVolume) * 100;
@@ -2342,7 +2343,7 @@
                   <div className="flex-1 relative">
                     <div className="w-full bg-[var(--white)] rounded-full h-8 relative overflow-hidden">
                       <div
-                        className="bg-[var(--secondaryMain)] h-full rounded-full transition-all duration-700 ease-out"
+                        className="bg-[var(--primaryMain)] h-full rounded-full transition-all duration-700 ease-out"
                         style={{ width: `${barWidth}%` }}
                       ></div>
                       <div className="absolute inset-0 flex items-center justify-end pr-3">
@@ -2373,7 +2374,7 @@
       if (rtoVolume !== null && target) {
         const rawVar = ((rtoVolume - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -2432,7 +2433,7 @@
       if (revenue !== null && target) {
         const rawVar = ((revenue - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -2490,7 +2491,7 @@
       if (parcelRps !== null && target) {
         const rawVar = ((parcelRps - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -2639,7 +2640,7 @@
       if (hnbRps !== null && target) {
         const rawVar = ((hnbRps - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -2929,7 +2930,7 @@
               datasets: [{
                 label: 'Revenue',
                 data: chartData.map(item => item.revenue),
-                backgroundColor: '#1f6a4a',
+                backgroundColor: '#1fb14a',
                 borderColor: '#184c36',
                 borderWidth: 1,
                 borderRadius: 4,
@@ -3045,7 +3046,7 @@
       }
 
       return (
-        <div className="w-full h-96 bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-6">
+        <div className="w-full h-96 bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-6">
           <canvas ref={chartRef} className="w-full h-full"></canvas>
         </div>
       );
@@ -3203,7 +3204,7 @@
               datasets: [{
                 label: 'Volume',
                 data: chartData.map(item => item.volume),
-                backgroundColor: '#1f6a4a',
+                backgroundColor: '#1fb14a',
                 borderColor: '#184c36',
                 borderWidth: 1,
                 borderRadius: 4,
@@ -3318,7 +3319,7 @@
       }
 
       return (
-        <div className="w-full h-96 bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-6">
+        <div className="w-full h-96 bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-6">
           <canvas ref={chartRef} className="w-full h-full"></canvas>
         </div>
       );
@@ -3582,37 +3583,37 @@
               <thead className="sticky top-0 z-10">
                 <tr>
                   <th
-                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--secondaryMain)] rounded-tl-lg cursor-pointer hover:bg-[var(--secondaryMain)] hover:text-[var(--white)] transition-colors select-none"
+                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--primaryMain)] rounded-tl-lg cursor-pointer hover:bg-[var(--primaryMain)] hover:text-[var(--white)] transition-colors select-none"
                     onClick={() => handleSort('customer')}
                   >
                     Customers{getSortIndicator('customer')}
                   </th>
                   <th
-                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--secondaryMain)] cursor-pointer hover:bg-[var(--secondaryMain)] hover:text-[var(--white)] transition-colors select-none"
+                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--primaryMain)] cursor-pointer hover:bg-[var(--primaryMain)] hover:text-[var(--white)] transition-colors select-none"
                     onClick={() => handleSort('tier0')}
                   >
                     Sum of Tier 0{getSortIndicator('tier0')}
                   </th>
                   <th
-                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--secondaryMain)] cursor-pointer hover:bg-[var(--secondaryMain)] hover:text-[var(--white)] transition-colors select-none"
+                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--primaryMain)] cursor-pointer hover:bg-[var(--primaryMain)] hover:text-[var(--white)] transition-colors select-none"
                     onClick={() => handleSort('tier1')}
                   >
                     Sum of Tier 1{getSortIndicator('tier1')}
                   </th>
                   <th
-                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--secondaryMain)] cursor-pointer hover:bg-[var(--secondaryMain)] hover:text-[var(--white)] transition-colors select-none"
+                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--primaryMain)] cursor-pointer hover:bg-[var(--primaryMain)] hover:text-[var(--white)] transition-colors select-none"
                     onClick={() => handleSort('tier2')}
                   >
                     Sum of Tier 2{getSortIndicator('tier2')}
                   </th>
                   <th
-                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--secondaryMain)] cursor-pointer hover:bg-[var(--secondaryMain)] hover:text-[var(--white)] transition-colors select-none"
+                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--primaryMain)] cursor-pointer hover:bg-[var(--primaryMain)] hover:text-[var(--white)] transition-colors select-none"
                     onClick={() => handleSort('tier3')}
                   >
                     Sum of Tier 3{getSortIndicator('tier3')}
                   </th>
                   <th
-                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--secondaryMain)] rounded-tr-lg cursor-pointer hover:bg-[var(--secondaryMain)] hover:text-[var(--white)] transition-colors select-none"
+                    className="px-6 py-3 font-bold text-base bg-[rgba(31,106,74,0.1)] border-b-2 border-[var(--primaryMain)] rounded-tr-lg cursor-pointer hover:bg-[var(--primaryMain)] hover:text-[var(--white)] transition-colors select-none"
                     onClick={() => handleSort('total')}
                   >
                     Sum of Total{getSortIndicator('total')}
@@ -3628,13 +3629,13 @@
                   </tr>
                 ) : (
                   sortedData.map((row, index) => (
-                    <tr key={index} className="bg-[var(--white)] hover:bg-[var(--secondaryMain)] hover:text-[var(--neutral)] transition-colors">
+                    <tr key={index} className="bg-[var(--white)] hover:bg-[var(--primaryMain)] hover:text-[var(--neutral)] transition-colors">
                       <td className="px-6 py-4 text-[var(--text)] font-medium">{row.customer}</td>
                       <td className="px-6 py-4 text-[var(--primaryMain)]">{row.tier0 > 0 ? row.tier0.toLocaleString() : '0'}</td>
                       <td className="px-6 py-4 text-[var(--primaryMain)]">{row.tier1 > 0 ? row.tier1.toLocaleString() : '0'}</td>
                       <td className="px-6 py-4 text-[var(--primaryMain)]">{row.tier2 > 0 ? row.tier2.toLocaleString() : '0'}</td>
                       <td className="px-6 py-4 text-[var(--primaryMain)]">{row.tier3 > 0 ? row.tier3.toLocaleString() : '0'}</td>
-                      <td className="px-6 py-4 text-[var(--secondaryMain)] font-bold">{row.total > 0 ? row.total.toLocaleString() : '0'}</td>
+                      <td className="px-6 py-4 text-[var(--primaryMain)] font-bold">{row.total > 0 ? row.total.toLocaleString() : '0'}</td>
                     </tr>
                   ))
                 )}
@@ -3660,7 +3661,7 @@
         rps = revenue / delivered;
         const rawVar = ((rps - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000 ';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000 ';
       }
 
       React.useEffect(() => {
@@ -3854,7 +3855,7 @@
           const el = document.getElementById(`gauge-stage-${i}`);
           if (el) {
             const ctx = el.getContext('2d');
-            createGaugeChart(ctx, val, '#1f6a4a', el);
+            createGaugeChart(ctx, val, '#1fb14a', el);
           }
         });
         // Last Mile Transportation Costs
@@ -3871,7 +3872,7 @@
         if (selectedTab !== 'revenue') return;
         // Get computed color values for palette
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
         const orangeLight = rootStyle.getPropertyValue('--textSecondary').trim() || '#ffd8a3';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Clean up previous charts if any
@@ -3989,9 +3990,9 @@
         if (selectedTab !== 'firstmile') return;
         // Get computed color values for palette
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
-        const orangeFill = 'rgba(255,157,24,0.15)';
-        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1f6a4a';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
+        const orangeFill = 'rgba(2, 96, 24,0.15)';
+        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1fb14a';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Clean up previous chart if any
         const costChartEl = document.getElementById('firstmile-cost-chart');
@@ -4096,9 +4097,9 @@
         if (selectedTab !== 'firstmile') return;
         // Get computed color values for palette
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
-        const orangeFill = 'rgba(255,157,24,0.15)';
-        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1f6a4a';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
+        const orangeFill = 'rgba(2, 96, 24,0.15)';
+        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1fb14a';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Clean up previous chart if any
         // ... existing code ...
@@ -4257,9 +4258,9 @@
         if (selectedTab !== 'sortcenter') return;
         // Get computed color values for palette
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
-        const orangeFill = 'rgba(255,157,24,0.15)';
-        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1f6a4a';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
+        const orangeFill = 'rgba(2, 96, 24,0.15)';
+        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1fb14a';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Clean up previous chart if any
         const costChartEl = document.getElementById('sortcenter-cost-chart');
@@ -4509,8 +4510,8 @@
         if (selectedTab !== 'scgap') return;
         // ...existing code...
         // --- SC Gap Analysis Dual-Axis Charts ---
-        const green = getComputedStyle(document.documentElement).getPropertyValue('--primaryMain').trim() || '#1f6a4a';
-        const orange = getComputedStyle(document.documentElement).getPropertyValue('--secondaryMain').trim() || '#ff9d18';
+        const green = getComputedStyle(document.documentElement).getPropertyValue('--primaryMain').trim() || '#1fb14a';
+        const orange = getComputedStyle(document.documentElement).getPropertyValue('--primaryMain').trim() || '#ff9d18';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Sample data
         const labels = ['May 2025', '', '', '', '', '', '', '', '', '', 'Jun 2025', '', '', '', '', '', '', '', '', '', 'Jun 22'];
@@ -4680,8 +4681,8 @@
         if (selectedTab !== 'linehaul') return;
         // Get computed color values for palette
         const rootStyle = getComputedStyle(document.documentElement);
-        const orange = rootStyle.getPropertyValue('--secondaryMain').trim() || '#ff9d18';
-        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1f6a4a';
+        const orange = rootStyle.getPropertyValue('--primaryMain').trim() || '#ff9d18';
+        const green = rootStyle.getPropertyValue('--primaryMain').trim() || '#1fb14a';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Clean up previous chart if any
         const costChartEl = document.getElementById('linehaul-cost-chart');
@@ -5006,8 +5007,8 @@
         if (selectedTab !== 'lhgap') return;
         // ... existing code ...
         // --- Line Haul Gap Analysis Dual-Axis Charts ---
-        const green = getComputedStyle(document.documentElement).getPropertyValue('--primaryMain').trim() || '#1f6a4a';
-        const orange = getComputedStyle(document.documentElement).getPropertyValue('--secondaryMain').trim() || '#ff9d18';
+        const green = getComputedStyle(document.documentElement).getPropertyValue('--primaryMain').trim() || '#1fb14a';
+        const orange = getComputedStyle(document.documentElement).getPropertyValue('--primaryMain').trim() || '#ff9d18';
         const fontFamily = `'Euclid Circular B', 'Inter', 'sans-serif'`;
         // Sample data
         const labels = ['May 2025', '', '', '', '', '', '', '', '', '', 'Jun 2025', '', '', '', '', '', '', '', '', '', 'Jun 22'];
@@ -5216,25 +5217,25 @@
                   src="images/starlinks.png"
                   alt="Starlinks Logo"
                   className="mb-6 rounded-xl home-image-shadow"
-                  style={{ width: '640px', maxWidth: '100vw', height: 'auto', objectFit: 'contain', boxShadow: '0 8px 32px 0 var(--secondaryMain)' }}
+                  style={{ width: '640px', maxWidth: '100vw', height: 'auto', objectFit: 'contain', boxShadow: '0 8px 32px 0 var(--primaryMain)' }}
                 />
-                <h1 className="text-3xl font-bold mb-4 text-[var(--secondaryMain)] text-center">Welcome to Home Delivery KPIs</h1>
+                <h1 className="text-3xl font-bold mb-4 text-[var(--primaryMain)] text-center">Welcome to Home Delivery KPIs</h1>
                 <div className="flex flex-wrap gap-6 mb-8 justify-center items-stretch w-full max-w-5xl">
-                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--secondaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.1s' }}>
-                    <i className="fa-solid fa-chart-line text-3xl mb-3 text-[var(--secondaryMain)]" />
-                    <span className="text-base font-semibold text-[var(--secondaryMain)]">Analyze key performance indicators across the delivery network.</span>
+                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--primaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.1s' }}>
+                    <i className="fa-solid fa-chart-line text-3xl mb-3 text-[var(--primaryMain)]" />
+                    <span className="text-base font-semibold text-[var(--primaryMain)]">Analyze key performance indicators across the delivery network.</span>
                   </div>
-                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--secondaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.25s' }}>
-                    <i className="fa-solid fa-coins text-3xl mb-3 text-[var(--secondaryMain)]" />
-                    <span className="text-base font-semibold text-[var(--secondaryMain)]">Track revenue, costs, and shipment volumes.</span>
+                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--primaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.25s' }}>
+                    <i className="fa-solid fa-coins text-3xl mb-3 text-[var(--primaryMain)]" />
+                    <span className="text-base font-semibold text-[var(--primaryMain)]">Track revenue, costs, and shipment volumes.</span>
                   </div>
-                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--secondaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.4s' }}>
-                    <i className="fa-solid fa-magnifying-glass-chart text-3xl mb-3 text-[var(--secondaryMain)]" />
-                    <span className="text-base font-semibold text-[var(--secondaryMain)]">Drill down into specific areas like First Mile, Sort Center, Line Haul, and more.</span>
+                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--primaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.4s' }}>
+                    <i className="fa-solid fa-magnifying-glass-chart text-3xl mb-3 text-[var(--primaryMain)]" />
+                    <span className="text-base font-semibold text-[var(--primaryMain)]">Drill down into specific areas like First Mile, Sort Center, Line Haul, and more.</span>
                   </div>
-                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--secondaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.55s' }}>
-                    <i className="fa-solid fa-upload text-3xl mb-3 text-[var(--secondaryMain)]" />
-                    <span className="text-base font-semibold text-[var(--secondaryMain)]">Upload your own data to generate custom reports and visualizations.</span>
+                  <div className="flex-1 min-w-[200px] max-w-xs card flip-in flex flex-col items-center justify-center text-center p-6 border-2 border-[var(--primaryMain)] bg-[var(--white)]" style={{ animationDelay: '0.55s' }}>
+                    <i className="fa-solid fa-upload text-3xl mb-3 text-[var(--primaryMain)]" />
+                    <span className="text-base font-semibold text-[var(--primaryMain)]">Upload your own data to generate custom reports and visualizations.</span>
                   </div>
                 </div>
                 <div id="threads-root" style={{ width: '100%', height: '600px', position: 'relative', marginBottom: '2rem' }}></div>
@@ -5243,8 +5244,8 @@
             {selectedTab === 'overview' && (
               <section className="relative">
                 <button id="openFiltersBtn" className="btn-primary absolute top-4 right-4">Filters</button>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Home Delivery Performance Overview</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Home Delivery Performance Overview</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">Volume & Revenue Performance</div>
                   <div className="flex flex-wrap gap-6 justify-center items-stretch w-full">
                     <DeliveredVolumeValue files={files} />
@@ -5254,15 +5255,15 @@
                   </div>
                 </div>
                 {/* Cost Efficiency Subtitle and Cards */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">Cost Efficiency</div>
                   <OverviewKpiCards files={files} />
                 </div>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">Last Mile Transportation Costs</div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
                     {['Sort Center Actual CPS VS. Target', 'PPS Actual CPS VS. Target', '3PL Actual Cost VS. Target', 'H&B Actual Cost VS. Target', 'M&V Actual Cost VS. Target', '3PL Actual CPS VS. Target'].map((label, i) => (
-                      <div className="card bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-xl p-6 shadow flex flex-col items-center justify-center" key={label}>
+                      <div className="card bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-xl p-6 shadow flex flex-col items-center justify-center" key={label}>
                         <div className="text-sm font-semibold subtitle-custom mb-2 text-center">{label}</div>
                         <canvas id={`gauge-lastmile-${i}`} width="100" height="60" className="mb-2"></canvas>
                       </div>
@@ -5273,14 +5274,14 @@
             )}
             {selectedTab === 'pnl' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Profit and Loss Analysis</h2>
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Profit and Loss Analysis</h2>
                 <PnLTable files={files} />
               </section>
             )}
             {selectedTab === 'revenue' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Revenue Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Revenue Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Key Revenue Metrics</div>
                   <div className="flex flex-wrap gap-6 mb-8 justify-center items-stretch w-full">
                     <TotalRevenueValue files={files} />
@@ -5291,29 +5292,29 @@
                   </div>
                 </div>
                 {/* Highest 10 Customers - Chart Only */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Highest 10 Customers</div>
                   <Highest10CustomersChart files={files} />
                 </div>
 
                 {/* Revenue by Tier - All Customers Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Revenue by Tier (All Customers)</div>
                   <RevenuePerTierTable files={files} />
                 </div>
                 {/* CPS per Tier subtitle and table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">CPS per Tier</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base bg-[var(--white)] border-b-2 border-[var(--secondaryMain)] rounded-tl-lg"></th>
-                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--secondaryMain)]">Tier 0</th>
-                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--secondaryMain)]">Tier 1</th>
-                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--secondaryMain)]">Tier 2</th>
-                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--secondaryMain)]">Tier 3</th>
-                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--secondaryMain)] rounded-tr-lg">Total</th>
+                          <th className="px-6 py-3 font-bold text-base bg-[var(--white)] border-b-2 border-[var(--primaryMain)] rounded-tl-lg"></th>
+                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--primaryMain)]">Tier 0</th>
+                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--primaryMain)]">Tier 1</th>
+                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--primaryMain)]">Tier 2</th>
+                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--primaryMain)]">Tier 3</th>
+                          <th className="px-6 py-3 font-bold text-base subtitle-custom bg-[var(--white)] border-b-2 border-[var(--primaryMain)] rounded-tr-lg">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5323,7 +5324,7 @@
                           <td className="px-6 py-4 text-[var(--white)]"></td>
                           <td className="px-6 py-4 text-[var(--white)]"></td>
                           <td className="px-6 py-4 text-[var(--white)]"></td>
-                          <td className="px-6 py-4 text-[var(--secondaryMain)] font-bold"></td>
+                          <td className="px-6 py-4 text-[var(--primaryMain)] font-bold"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -5331,7 +5332,7 @@
                 </div>
 
                 {/* Volume by Customer bar chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Volume by Customer</div>
                   <Top5VolumeByCustomerChart files={files} />
                 </div>
@@ -5339,8 +5340,8 @@
             )}
             {selectedTab === 'firstmile' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">First Mile Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">First Mile Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-center">Key First Mile Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <KpiCardTwoTone label="Total First Mile Cost" icon="fa-money-bill" />
@@ -5349,26 +5350,26 @@
                   </div>
                 </div>
                 {/* First Mile Cost chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mt-10 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">First Mile Cost</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mt-10 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">First Mile Cost</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="firstmile-cost-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* First Mile CPS chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">First Mile CPS</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">First Mile CPS</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="firstmile-cps-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* First Mile Volume chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">First Mile Volume</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">First Mile Volume</div>
                   <FirstMileVolumeChart files={files} />
                 </div>
                 {/* First Mile Cost per Hub charts */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
                   <div className="text-lg font-bold subtitle-custom text-center mb-8">First Mile Cost per Hub</div>
                   <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
                     <div className="flex-1 flex flex-col items-center justify-center min-w-[260px] max-w-lg">
@@ -5380,16 +5381,16 @@
                   </div>
                 </div>
                 {/* First Mile Volumes per Hub chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">First Mile Volumes per Hub</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">First Mile Volumes per Hub</div>
                   <FirstMileVolumesPerHubChart files={files} />
                 </div>
               </section>
             )}
             {selectedTab === 'sortcenter' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Sort Center Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Sort Center Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-[var(--textSecondary)] text-center">Key Sort Center Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <KpiCardTwoTone label="Total Sort Center Cost" icon="fa-money-bill" />
@@ -5398,27 +5399,27 @@
                   </div>
                 </div>
                 {/* Sort Center Cost chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mt-10 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Sort Center Cost</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mt-10 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Sort Center Cost</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="sortcenter-cost-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* Sort Center CPS chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Sort Center CPS</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Sort Center CPS</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="sortcenter-cps-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* Sort Center Volume chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Sort Center Volume</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Sort Center Volume</div>
                   <SortCenterVolumeChart files={files} />
                 </div>
                 {/* Sort Center Cost per Hub charts */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">Sort Center Cost per Hub</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">Sort Center Cost per Hub</div>
                   <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
                     <div className="flex-1 flex flex-col items-center justify-center min-w-[260px] max-w-lg">
                       <canvas id="sortcenter-cost-hub-bar" width="320" height="320"></canvas>
@@ -5429,52 +5430,52 @@
                   </div>
                 </div>
                 {/* Sort Center Volumes per Hub chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">Sort Center Volumes per Hub</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">Sort Center Volumes per Hub</div>
                   <SortCenterVolumesPerHubChart files={files} />
                 </div>
               </section>
             )}
             {selectedTab === 'scgap' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Sort Center Gap Analysis</h2>
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Sort Center Gap Analysis</h2>
                 {/* SC Gap Analysis Metrics Group */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">SC Gap Analysis Metrics</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">SC Gap Analysis Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     {/* Card 1: Ops SC Cost & System SC Cost */}
-                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--secondaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
+                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--primaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">Ops SC Cost</span>
                       </div>
-                      <div className="h-12 w-px bg-[var(--secondaryMain)] mx-4" />
+                      <div className="h-12 w-px bg-[var(--primaryMain)] mx-4" />
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">System SC Cost</span>
                       </div>
                     </div>
                     {/* Card 2: Ops SC CPS & System SC CPS */}
-                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--secondaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
+                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--primaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">Ops SC CPS</span>
                       </div>
-                      <div className="h-12 w-px bg-[var(--secondaryMain)] mx-4" />
+                      <div className="h-12 w-px bg-[var(--primaryMain)] mx-4" />
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">System SC CPS</span>
                       </div>
                     </div>
                     {/* Card 3: Ops SC Volume & System SC Volume */}
-                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--secondaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
+                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--primaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">Ops SC Volume</span>
                       </div>
-                      <div className="h-12 w-px bg-[var(--secondaryMain)] mx-4" />
+                      <div className="h-12 w-px bg-[var(--primaryMain)] mx-4" />
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">System SC Volume</span>
                       </div>
                     </div>
@@ -5482,22 +5483,22 @@
                 </div>
                 {/* Sort Center CPS Chart */}
                 <div className="mb-10 w-full max-w-6xl mx-auto">
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Sort Center CPS</div>
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Sort Center CPS</div>
                     <canvas id="scgap-cps-chart" height="160"></canvas>
                   </div>
                 </div>
                 {/* Sort Center Cost Chart */}
                 <div className="mb-10 w-full max-w-6xl mx-auto">
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Sort Center Cost</div>
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Sort Center Cost</div>
                     <canvas id="scgap-cost-chart" height="160"></canvas>
                   </div>
                 </div>
                 {/* Sort Center Volume Chart */}
                 <div className="mb-10 w-full max-w-6xl mx-auto">
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Sort Center Volume</div>
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Sort Center Volume</div>
                     <canvas id="scgap-volume-chart" height="160"></canvas>
                   </div>
                 </div>
@@ -5505,14 +5506,14 @@
             )}
             {selectedTab === 'settings' && (
               <section className="flex flex-col items-center justify-center min-h-[60vh] w-full">
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Settings</h2>
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Settings</h2>
                 <SettingsFileUpload files={files} setFiles={setFiles} />
               </section>
             )}
             {selectedTab === 'linehaul' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Line Haul Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Line Haul Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-[var(--textSecondary)] text-center">Key Line Haul Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <KpiCard label="Total Line Haul Cost" icon="fa-money-bill" />
@@ -5521,29 +5522,29 @@
                   </div>
                 </div>
                 {/* Line Haul Cost chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mt-10 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Line Haul Cost</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mt-10 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Line Haul Cost</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="linehaul-cost-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* Line Haul CPS chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Line Haul CPS</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Line Haul CPS</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="linehaul-cps-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* Line Haul Volume chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Line Haul Volume</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-8 w-full max-w-6xl mx-auto">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Line Haul Volume</div>
                   <div className="h-72 flex items-center justify-center">
                     <canvas id="linehaul-volume-chart" width="700" height="250"></canvas>
                   </div>
                 </div>
                 {/* Line Haul Cost per Hub charts */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">Line Haul Cost per Hub</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">Line Haul Cost per Hub</div>
                   <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
                     <div className="flex-1 flex flex-col items-center justify-center min-w-[260px] max-w-lg">
                       <canvas id="linehaul-cost-hub-bar" width="320" height="320"></canvas>
@@ -5554,8 +5555,8 @@
                   </div>
                 </div>
                 {/* Line Haul Volumes per Hub chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">Line Haul Volumes per Hub</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl shadow-lg p-10 w-full max-w-6xl mx-auto mt-10">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">Line Haul Volumes per Hub</div>
                   <div className="flex flex-col items-center justify-center w-full">
                     <canvas id="linehaul-volume-hub-bar" width="700" height="320"></canvas>
                   </div>
@@ -5564,44 +5565,44 @@
             )}
             {selectedTab === 'lhgap' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Line Haul Gap Analysis</h2>
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Line Haul Gap Analysis</h2>
                 {/* LH Gap Analysis Metrics Group - now below the title */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">LH Gap Analysis Metrics</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">LH Gap Analysis Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     {/* Card 1: Ops LH Cost & System LH Cost */}
-                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--secondaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
+                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--primaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">Ops LH Cost</span>
                       </div>
-                      <div className="h-12 w-px bg-[var(--secondaryMain)] mx-4" />
+                      <div className="h-12 w-px bg-[var(--primaryMain)] mx-4" />
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-money-bill text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">System LH Cost</span>
                       </div>
                     </div>
                     {/* Card 2: Ops LH CPS & System LH CPS */}
-                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--secondaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
+                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--primaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">Ops LH CPS</span>
                       </div>
-                      <div className="h-12 w-px bg-[var(--secondaryMain)] mx-4" />
+                      <div className="h-12 w-px bg-[var(--primaryMain)] mx-4" />
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-sliders-h text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">System LH CPS</span>
                       </div>
                     </div>
                     {/* Card 3: Ops LH Volume & System LH Volume */}
-                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--secondaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
+                    <div className="flex-1 min-w-[260px] max-w-xs card flex flex-row items-center justify-center text-center p-10 border-2 border-[var(--primaryMain)] bg-[var(--white)] rounded-xl shadow-lg">
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">Ops LH Volume</span>
                       </div>
-                      <div className="h-12 w-px bg-[var(--secondaryMain)] mx-4" />
+                      <div className="h-12 w-px bg-[var(--primaryMain)] mx-4" />
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--secondaryMain)]" />
+                        <i className="fa-solid fa-truck text-4xl mb-2 text-[var(--primaryMain)]" />
                         <span className="font-semibold subtitle-custom text-[var(--text)]">System LH Volume</span>
                       </div>
                     </div>
@@ -5609,22 +5610,22 @@
                 </div>
                 {/* Line Haul CPS Chart */}
                 <div className="mb-10 w-full max-w-6xl mx-auto">
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Line Haul CPS</div>
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Line Haul CPS</div>
                     <canvas id="linehaul-cps-gap-chart" height="160"></canvas>
                   </div>
                 </div>
                 {/* Line Haul Cost Chart */}
                 <div className="mb-10 w-full max-w-6xl mx-auto">
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Line Haul Cost</div>
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Line Haul Cost</div>
                     <canvas id="linehaul-cost-gap-chart" height="160"></canvas>
                   </div>
                 </div>
                 {/* Line Haul Volume Chart */}
                 <div className="mb-10 w-full max-w-6xl mx-auto">
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-4">Line Haul Volume</div>
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center">
+                    <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-4">Line Haul Volume</div>
                     <canvas id="linehaul-volume-gap-chart" height="160"></canvas>
                   </div>
                 </div>
@@ -5632,21 +5633,21 @@
             )}
             {selectedTab === 'pps' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">PPS Breakdown by Tier and Vendor</h2>
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">PPS Breakdown by Tier and Vendor</h2>
                 {/* PPS Metrics Group */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
-                  <div className="text-lg font-bold subtitle-custom text-[var(--secondaryMain)] text-center mb-8">PPS Metrics</div>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                  <div className="text-lg font-bold subtitle-custom text-[var(--primaryMain)] text-center mb-8">PPS Metrics</div>
                   <div className="flex flex-row flex-wrap justify-center gap-8 w-full">
                     <PpsKpiCards files={files} />
                   </div>
                 </div>
                 {/* PPS Cost per Tier Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">PPS cost per Tier</div>
                   <PpsTierTable files={files} />
                 </div>
                 {/* PPS Cost per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">PPS Cost per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2">
@@ -5669,7 +5670,7 @@
                   </div>
                 </div>
                 {/* Volumes per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">Volumes per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2">
@@ -5692,7 +5693,7 @@
                   </div>
                 </div>
                 {/* CPS per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">CPS per Vendor</div>
                   <div className="overflow-y-auto max-h-64">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2">
@@ -5709,14 +5710,14 @@
                   </div>
                 </div>
                 {/* Cost by Vendor Pie Chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">Cost by Vendor</div>
                   <canvas id="pps-cost-pie" width="320" height="220"></canvas>
                 </div>
                 {/* CPS per Hub Row */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-6 mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-6 mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">CPS per Hub</div>
-                  <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-6 mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
+                  <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-6 mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center">
                     <div className="overflow-x-auto w-full">
                       <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2">
                         <thead>
@@ -5741,33 +5742,33 @@
             )}
             {selectedTab === 'tpl' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">3PL Breakdown by Courier Partner</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">3PL Breakdown by Courier Partner</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-8">3PL Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <TplKpiCards files={files} />
                   </div>
                 </div>
                 {/* 3PL Cost per Tier Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">3PL cost per Tier</div>
                   <TplTierTable files={files} />
                 </div>
                 {/* 3PL Cost per Courier Partner Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">3PL Cost per Courier Partner</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Courier Partner</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Courier Partner</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5786,20 +5787,20 @@
                   </div>
                 </div>
                 {/* Volumes per Courier Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Volumes per Courier</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Courier Partner</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Courier Partner</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5818,14 +5819,14 @@
                   </div>
                 </div>
                 {/* CPS per Courier Partner Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">CPS per Courier Partner</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Courier Partner</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">3PL CPS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Courier Partner</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">3PL CPS</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5838,19 +5839,19 @@
                   </div>
                 </div>
                 {/* CPS per Hub Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">CPS per Hub</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5868,7 +5869,7 @@
                   </div>
                 </div>
                 {/* Cost by Courier Partner Pie Chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-3xl mx-auto flex flex-col items-center justify-center">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-3xl mx-auto flex flex-col items-center justify-center">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">Cost by Courier Partner</div>
                   <div className="text-center text-[var(--textSecondary)] py-8">[Pie Chart Placeholder]</div>
                 </div>
@@ -5876,33 +5877,33 @@
             )}
             {selectedTab === 'mv' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">M&V Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">M&V Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-8">M&V Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <MvKpiCards files={files} />
                   </div>
                 </div>
                 {/* M&V Cost per Tier Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">M&V cost per Tier</div>
                   <MvTierTable files={files} />
                 </div>
                 {/* M&V Cost per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">M&V Cost per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Vendor</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Vendor</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5921,20 +5922,20 @@
                   </div>
                 </div>
                 {/* Volumes per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Volumes per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Vendor</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Vendor</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5953,19 +5954,19 @@
                   </div>
                 </div>
                 {/* M&V CPS per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">M&V CPS per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -5983,19 +5984,19 @@
                   </div>
                 </div>
                 {/* M&V CPS per Hub Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">M&V CPS per Hub</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6016,32 +6017,32 @@
             )}
             {selectedTab === 'hb' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Heavy and Bulky Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Heavy and Bulky Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-8">H&B Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <HbKpiCards files={files} />
                   </div>
                 </div>
                 {/* H&B Cost per Tier Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-4">H&B cost per Tier</div>
                   <HbTierTable files={files} />
                 </div>
                 {/* H&B Cost per Hub Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">H&B Cost per Hub</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Actual Courier</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Actual Courier</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6059,18 +6060,18 @@
                   </div>
                 </div>
                 {/* CPS per Hub Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">CPS per Hub</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6087,20 +6088,20 @@
                   </div>
                 </div>
                 {/* Volumes per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Volumes per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Vendor</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Vendor</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6122,8 +6123,8 @@
             )}
             {selectedTab === 'volumes' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Volumes Breakdown</h2>
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Volumes Breakdown</h2>
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-12 gap-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-8">Volumes Metrics</div>
                   <div className="flex flex-row flex-wrap gap-8 justify-center items-stretch w-full">
                     <VolumesKpiCards files={files} />
@@ -6133,16 +6134,16 @@
                 </div>
                 <DeliveredVolumeChart files={files} />
                 {/* Stage-specific Volume per Hub Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Stage-specific Volume per Hub</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Hub Code</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">First Mile</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Sort Center</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Line Haul</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Hub Code</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">First Mile</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Sort Center</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Line Haul</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6157,20 +6158,20 @@
                   </div>
                 </div>
                 {/* PPS Volumes per Vendor Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">PPS Volumes per Vendor</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">PPS Vendor</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">DMM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">JED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">KAM</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">MED</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">QAS</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">RUH</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">PPS Vendor</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">DMM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">JED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">KAM</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">MED</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">QAS</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">RUH</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6189,14 +6190,14 @@
                   </div>
                 </div>
                 {/* 3PL Volumes per Courier Partner Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">3PL Volumes per Courier Partner</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Courier Partner</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Volume</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Courier Partner</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Volume</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6209,14 +6210,14 @@
                   </div>
                 </div>
                 {/* M&V Volumes per Hub Table */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">M&V Volumes per Hub</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Current Hub Code</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Volume</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Current Hub Code</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Volume</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6232,24 +6233,24 @@
             )}
             {selectedTab === 'customersvolumes' && (
               <section>
-                <h2 className="text-4xl font-extrabold mb-2 text-[var(--secondaryMain)] text-center">Customer Volumes Breakdown</h2>
+                <h2 className="text-4xl font-extrabold mb-2 text-[var(--primaryMain)] text-center">Customer Volumes Breakdown</h2>
 
                 {/* Volume by Customer bar chart */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl p-8 mb-10 w-full max-w-6xl mx-auto">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Volume by Customer</div>
                   <Top5VolumeByCustomerChart files={files} />
                 </div>
 
                 {/* Monthly Actual Delivered Volume by Customer */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Monthly Actual Delivered Volume by Customer</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Customer Names</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Jun</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Customer Names</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Jun</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6263,17 +6264,17 @@
                   </div>
                 </div>
                 {/* Monthly Target Volume by Customer */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Monthly Target Volume by Customer</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Customer Name</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Apr</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">May</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Jun</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Customer Name</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Apr</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">May</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Jun</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6289,15 +6290,15 @@
                   </div>
                 </div>
                 {/* Daily Actual Delivered Volume by Customer */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Daily Actual Delivered Volume by Customer</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Customer Names</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Jun</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Customer Names</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Jun</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6311,17 +6312,17 @@
                   </div>
                 </div>
                 {/* Daily Target Volume by Customer */}
-                <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
+                <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto px-4 py-8">
                   <div className="text-lg font-bold subtitle-custom text-center mb-6">Daily Target Volume by Customer</div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full text-left text-[var(--text)] border-separate border-spacing-y-2 w-full">
                       <thead>
                         <tr>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Customer Name</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Apr</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">May</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Jun</th>
-                          <th className="px-6 py-3 font-bold text-base text-[var(--secondaryMain)] border-b-2 border-[var(--secondaryMain)]">Total</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Customer Name</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Apr</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">May</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Jun</th>
+                          <th className="px-6 py-3 font-bold text-base text-[var(--primaryMain)] border-b-2 border-[var(--primaryMain)]">Total</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -6355,25 +6356,25 @@
       };
       return (
         <div>
-          <div className="w-full max-w-lg card bg-[var(--white)] border-2 border-dashed border-[var(--secondaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center shadow-lg">
+          <div className="w-full max-w-lg card bg-[var(--white)] border-2 border-dashed border-[var(--primaryMain)] rounded-2xl p-8 flex flex-col items-center justify-center shadow-lg">
             <label htmlFor="settings-file-upload" className="flex flex-col items-center justify-center w-full h-48 cursor-pointer">
-              <i className="fa-solid fa-cloud-arrow-up text-5xl mb-4 text-[var(--secondaryMain)]" />
-              <span className="font-bold text-lg mb-2 text-[var(--secondaryMain)]">Drop Excel files here or click to upload</span>
+              <i className="fa-solid fa-cloud-arrow-up text-5xl mb-4 text-[var(--primaryMain)]" />
+              <span className="font-bold text-lg mb-2 text-[var(--primaryMain)]">Drop Excel files here or click to upload</span>
               <span className="text-[var(--textSecondary)] text-sm mb-2">(Supported: .xlsx, .xls, multiple allowed)</span>
               <input id="settings-file-upload" type="file" accept=".csv,.xlsx,.xls" className="hidden" multiple onChange={handleChange} />
             </label>
           </div>
           {files.length > 0 && (
-            <div className="w-full max-w-lg mt-4 card bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-xl p-4 shadow flex flex-col" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <span className="font-bold text-[var(--secondaryMain)] mb-3">Selected files:</span>
+            <div className="w-full max-w-lg mt-4 card bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-xl p-4 shadow flex flex-col" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <span className="font-bold text-[var(--primaryMain)] mb-3">Selected files:</span>
               <ul className="text-[var(--textSecondary)] space-y-2">
                 {files.map((file, idx) => (
                   <li key={idx} className="flex items-center gap-3 px-2 py-1 rounded hover:bg-[var(--white)] transition-all" style={{ minWidth: 0 }}>
-                    <i className="fa-regular fa-file-excel text-xl text-[var(--secondaryMain)] flex-shrink-0" />
+                    <i className="fa-regular fa-file-excel text-xl text-[var(--primaryMain)] flex-shrink-0" />
                     <span className="truncate font-medium" style={{ maxWidth: '180px' }} title={file.name}>{file.name}</span>
                     <span className="ml-auto text-xs text-[var(--textSecondary)] opacity-80 flex-shrink-0">{(file.size / 1024).toFixed(1)} KB</span>
                     <button
-                      className="ml-3 px-2 py-1 rounded-full bg-[var(--secondaryMain)] text-[var(--neutral)] text-xs font-bold hover:bg-[var(--secondaryHover)] transition-colors"
+                      className="ml-3 px-2 py-1 rounded-full bg-[var(--primaryMain)] text-[var(--neutral)] text-xs font-bold hover:bg-[var(--primaryMain)] transition-colors"
                       title="Remove file"
                       onClick={() => handleRemove(idx)}
                       type="button"
@@ -6450,9 +6451,9 @@
               <div className="text-center text-[var(--textSecondary)]">No files uploaded. Please upload files in Settings.</div>
             ) : (
               <div className="mb-4">
-                <label className="font-bold text-[var(--secondaryMain)] mr-2">Select file:</label>
+                <label className="font-bold text-[var(--primaryMain)] mr-2">Select file:</label>
                 <select
-                  className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded px-3 py-1 text-[var(--textSecondary)]"
+                  className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded px-3 py-1 text-[var(--textSecondary)]"
                   value={selectedFileIdx}
                   onChange={e => setSelectedFileIdx(Number(e.target.value))}
                 >
@@ -6464,7 +6465,7 @@
             )}
             {error && <div className="text-red-400 mt-2 text-center">{error}</div>}
           </div>
-          <div className="table-container bg-[var(--white)] rounded-xl shadow p-4 border-2 border-[var(--secondaryMain)] overflow-x-auto">
+          <div className="table-container bg-[var(--white)] rounded-xl shadow p-4 border-2 border-[var(--primaryMain)] overflow-x-auto">
             <table className="min-w-full text-sm rounded-xl">
               <thead>
                 <tr>
@@ -6491,7 +6492,7 @@
     // --- Add this new component before the Dashboard function ---
     function KpiCard({ label, icon, value, desc }) {
       return (
-        <div className="relative flex-1 min-w-[180px] max-w-[340px] card flip-in flex flex-col items-center justify-center text-center p-8 border-2 border-[var(--secondaryMain)] bg-[var(--white)] overflow-hidden">
+        <div className="relative flex-1 min-w-[180px] max-w-[340px] card flip-in flex flex-col items-center justify-center text-center p-8 border-2 border-[var(--primaryMain)] bg-[var(--white)] overflow-hidden">
           <div className="text-base font-bold subtitle-custom mb-2 z-10">{label}</div>
           {value !== undefined ? (
             <span className="text-4xl font-extrabold text-[var(--primaryMain)] z-10 mb-1">{value}</span>
@@ -6683,9 +6684,9 @@
 
       return (
         <div className="flex flex-row flex-wrap justify-center gap-8 w-full">
-          <KpiCard label="Total PPS Cost" icon="fa-money-bill" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
-          <KpiCard label="PPS CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
-          <KpiCard label="PPS Volume" icon="fa-truck" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="Total PPS Cost" icon="fa-money-bill" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="PPS CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
+          <KpiCard label="PPS Volume" icon="fa-truck" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--primaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
         </div>
       );
     }
@@ -6801,9 +6802,9 @@
 
       return (
         <div className="flex flex-row flex-wrap justify-center gap-8 w-full">
-          <KpiCard label="Total 3PL Cost" icon="fa-dolly" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
-          <KpiCard label="3PL CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
-          <KpiCard label="3PL Volume" icon="fa-box" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="Total 3PL Cost" icon="fa-dolly" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="3PL CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
+          <KpiCard label="3PL Volume" icon="fa-box" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--primaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
           {error && <div className="text-red-400 text-sm font-semibold z-10 w-full text-center">{error}</div>}
         </div>
       );
@@ -6920,9 +6921,9 @@
 
       return (
         <div className="flex flex-row flex-wrap justify-center gap-8 w-full">
-          <KpiCard label="M&V Cost" icon="fa-money-bill" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
-          <KpiCard label="M&V CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
-          <KpiCard label="M&V Volume" icon="fa-cubes" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="M&V Cost" icon="fa-money-bill" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="M&V CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
+          <KpiCard label="M&V Volume" icon="fa-cubes" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--primaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
           {error && <div className="text-red-400 text-sm font-semibold z-10 w-full text-center">{error}</div>}
         </div>
       );
@@ -7039,9 +7040,9 @@
 
       return (
         <div className="flex flex-row flex-wrap justify-center gap-8 w-full">
-          <KpiCard label="H&B Cost" icon="fa-money-bill" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
-          <KpiCard label="H&B CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
-          <KpiCard label="H&B Volume" icon="fa-box" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="H&B Cost" icon="fa-money-bill" value={loading ? '...' : (cost !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cost.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="H&B CPS" icon="fa-sliders-h" value={loading ? '...' : (cps !== null ? <span style={{ color: 'var(--primaryMain)' }}>{cps.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span> : undefined)} />
+          <KpiCard label="H&B Volume" icon="fa-box" value={loading ? '...' : (volume !== null ? <span style={{ color: 'var(--primaryMain)' }}>{volume.toLocaleString()}</span> : undefined)} />
           {error && <div className="text-red-400 text-sm font-semibold z-10 w-full text-center">{error}</div>}
         </div>
       );
@@ -7135,7 +7136,7 @@
 
       return (
         <div>
-          <KpiCard label="Total Delivered Volume" icon="fa-truck" value={loading ? '...' : (delivered !== null ? <span style={{ color: 'var(--secondaryMain)' }}>{delivered.toLocaleString()}</span> : undefined)} />
+          <KpiCard label="Total Delivered Volume" icon="fa-truck" value={loading ? '...' : (delivered !== null ? <span style={{ color: 'var(--primaryMain)' }}>{delivered.toLocaleString()}</span> : undefined)} />
           {error && <div className="text-red-400 text-sm font-semibold z-10 w-full text-center">{error}</div>}
         </div>
       );
@@ -7304,7 +7305,7 @@
       }, [files]);
 
       return (
-        <div className="bg-[var(--white)] border-2 border-[var(--secondaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-6 gap-4 mt-10">
+        <div className="bg-[var(--white)] border-2 border-[var(--primaryMain)] rounded-2xl mb-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center py-6 gap-4 mt-10">
           <div className="text-2xl font-extrabold subtitle-custom text-[#ff9d18] text-center mb-2" style={{ fontFamily: 'Euclid Circular B' }}>Delivered Volume</div>
           <canvas ref={chartRef} height="260" style={{ width: '100%', maxWidth: '900px', fontFamily: 'Euclid Circular B' }}></canvas>
           {error && <div className="text-red-400 text-sm font-semibold z-10 w-full text-center mt-2">{error}</div>}
@@ -7330,7 +7331,7 @@
       if (totalCost !== null && target) {
         const rawVar = ((totalCost - target) / target) * 100;
         variance = rawVar.toFixed(1) + '%';
-        varianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        varianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       // Calculate cashMargin
@@ -7344,7 +7345,7 @@
       if (cashMargin !== null && cashMarginTarget) {
         const rawVar = ((cashMargin - cashMarginTarget) / cashMarginTarget) * 100;
         cashMarginVariance = rawVar.toFixed(1) + '%';
-        cashMarginVarianceColor = rawVar >= 0 ? '#1f6a4a' : '#8B0000';
+        cashMarginVarianceColor = rawVar >= 0 ? '#1fb14a' : '#8B0000';
       }
 
       React.useEffect(() => {
@@ -7578,7 +7579,7 @@
             <tbody>
               <tr>
                 {totals.map((val, i) => (
-                  <td key={i} className="px-4 py-2 text-[var(--secondaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
+                  <td key={i} className="px-4 py-2 text-[var(--primaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
                 ))}
               </tr>
             </tbody>
@@ -7685,7 +7686,7 @@
             <tbody>
               <tr>
                 {totals.map((val, i) => (
-                  <td key={i} className="px-4 py-2 text-[var(--secondaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
+                  <td key={i} className="px-4 py-2 text-[var(--primaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
                 ))}
               </tr>
             </tbody>
@@ -7790,7 +7791,7 @@
             <tbody>
               <tr>
                 {totals.map((val, i) => (
-                  <td key={i} className="px-4 py-2 text-[var(--secondaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
+                  <td key={i} className="px-4 py-2 text-[var(--primaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
                 ))}
               </tr>
             </tbody>
@@ -7895,7 +7896,7 @@
             <tbody>
               <tr>
                 {totals.map((val, i) => (
-                  <td key={i} className="px-4 py-2 text-[var(--secondaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
+                  <td key={i} className="px-4 py-2 text-[var(--primaryMain)] font-bold text-lg">{loading ? '...' : (val !== null ? val.toLocaleString() : '')}</td>
                 ))}
               </tr>
             </tbody>
@@ -7916,18 +7917,18 @@
       const showVariance = variance !== undefined && variance !== null && variance !== '';
       return (
         <div
-          className="flex flex-col rounded-[2.5rem] overflow-hidden shadow-lg border-2 border-[#ff9d18]"
+          className="flex flex-col rounded-[2.5rem] overflow-hidden shadow-lg border-2 border-[var(--primaryMain)]"
           style={{ width: '340px', minWidth: '260px', maxWidth: '340px', height: '100%' }}
         >          {/* Top section */}
           <div className="relative bg-[var(--white)] flex flex-col items-center justify-center flex-grow p-8" style={{ borderTopLeftRadius: '2.5rem', borderTopRightRadius: '2.5rem' }}>
-            <div className="text-2xl font-extrabold subtitle-custom mb-2 text-[var(--secondaryMain)]" style={{ fontFamily: 'Euclid Circular B', position: 'relative', zIndex: 1 }}>{label}</div>
+            <div className="text-2xl font-extrabold subtitle-custom mb-2 text-[var(--primaryMain)]" style={{ fontFamily: 'Euclid Circular B', position: 'relative', zIndex: 1 }}>{label}</div>
             {value !== undefined ? (
-              <span className="text-5xl font-extrabold text-[var(--secondaryMain)] mb-2" style={{ position: 'relative', zIndex: 1 }}>{value}</span>
+              <span className="text-5xl font-extrabold text-[var(--primaryMain)] mb-2" style={{ position: 'relative', zIndex: 1 }}>{value}</span>
             ) : null}
             <i className={`fa-solid ${icon} absolute opacity-10 text-[8rem] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none`} style={{ zIndex: 0 }} />
           </div>
           {/* Bottom section */}
-          <div className="flex flex-row bg-[var(--secondaryMain)] text-[var(--primarySurface)] border-2 border-[var(--secondaryMain)] rounded-b-[2.5rem]">
+          <div className="flex flex-row bg-[var(--primaryMain)] text-[var(--primarySurface)] border-2 border-[var(--primaryMain)] rounded-b-[2.5rem]">
             <div className="flex-1 flex flex-col items-center justify-center py-1 border-r border-[var(--primarySurface)]">
               <div className="font-semibold mb-0" style={{ color: '#184c36', fontSize: '0.85rem' }}>Target</div>
               <div className="font-extrabold text-white" style={{ fontSize: '1.8rem', lineHeight: '1.1' }}>{showTarget ? target : ''}</div>
@@ -7945,14 +7946,14 @@
     function KpiCardSingleTone({ label, icon, value }) {
       return (
         <div
-          className="flex flex-col rounded-[2.5rem] overflow-hidden shadow-lg border-2 border-[#ff9d18]"
+          className="flex flex-col rounded-[2.5rem] overflow-hidden shadow-lg border-2 border-[var(--primaryMain)]"
           style={{ width: '340px', minWidth: '260px', maxWidth: '340px', height: '100%' }}
         >
           {/* Single section taking full height */}
           <div className="relative bg-[var(--white)] flex flex-col items-center justify-center flex-grow p-8" style={{ borderRadius: '2.5rem' }}>
-            <div className="text-2xl font-extrabold subtitle-custom mb-4 text-[var(--secondaryMain)]" style={{ fontFamily: 'Euclid Circular B', position: 'relative', zIndex: 1 }}>{label}</div>
+            <div className="text-2xl font-extrabold subtitle-custom mb-4 text-[var(--primaryMain)]" style={{ fontFamily: 'Euclid Circular B', position: 'relative', zIndex: 1 }}>{label}</div>
             {value !== undefined ? (
-              <span className="text-6xl font-extrabold text-[var(--secondaryMain)]" style={{ position: 'relative', zIndex: 1 }}>{value}</span>
+              <span className="text-6xl font-extrabold text-[var(--primaryMain)]" style={{ position: 'relative', zIndex: 1 }}>{value}</span>
             ) : null}
             <i className={`fa-solid ${icon} absolute opacity-10 text-[8rem] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none`} style={{ zIndex: 0 }} />
           </div>
